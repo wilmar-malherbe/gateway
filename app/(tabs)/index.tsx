@@ -81,15 +81,24 @@ export default function HomeScreen() {
             subtitle="Join us this week"
           />
 
-          {services.map((service, index) => (
+          {services.length > 0 ? (
+            services.map((service, index) => (
+              <ServiceCard
+                key={service.id}
+                time={service.service_time}
+                description={service.description}
+                capacity={service.capacity.toString()}
+                isUpcoming={index === 1}
+              />
+            ))
+          ) : (
             <ServiceCard
-              key={service.id}
-              time={service.service_time}
-              description={service.description}
-              capacity={service.capacity.toString()}
-              isUpcoming={index === 1}
+              time="8:00 AM"
+              description="Traditional Service"
+              capacity="200"
+              isUpcoming={false}
             />
-          ))}
+          )}
 
           <View style={styles.spacer} />
 
