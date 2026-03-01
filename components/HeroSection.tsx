@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from "expo-linear-gradient";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { COLORS, Fonts, SPACING, BORDER_RADIUS } from '@/constants/theme';
 

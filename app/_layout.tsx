@@ -16,23 +16,23 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [fontsLoaded] = useFonts({
-    Montserrat_100Thin: require('@/assets/fonts/Montserrat-Thin.ttf'),
-    Montserrat_300Light: require('@/assets/fonts/Montserrat-Light.ttf'),
-    Montserrat_400Regular: require('@/assets/fonts/Montserrat-Regular.ttf'),
-    Montserrat_600SemiBold: require('@/assets/fonts/Montserrat-SemiBold.ttf'),
-    Montserrat_700Bold: require('@/assets/fonts/Montserrat-Bold.ttf'),
-  });
+  // const [fontsLoaded] = useFonts({
+  //   Montserrat_100Thin: require('@/assets/fonts/Montserrat-Thin.ttf'),
+  //   Montserrat_300Light: require('@/assets/fonts/Montserrat-Light.ttf'),
+  //   Montserrat_400Regular: require('@/assets/fonts/Montserrat-Regular.ttf'),
+  //   Montserrat_600SemiBold: require('@/assets/fonts/Montserrat-SemiBold.ttf'),
+  //   Montserrat_700Bold: require('@/assets/fonts/Montserrat-Bold.ttf'),
+  // });
 
-  useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
+  // useEffect(() => {
+  //   if (fontsLoaded) {
+  //     SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
-    return null;
-  }
+  // if (!fontsLoaded) {
+  //   return null;
+  // }
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
