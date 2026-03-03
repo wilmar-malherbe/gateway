@@ -1,4 +1,3 @@
-import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
@@ -6,33 +5,20 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import { useEffect } from 'react';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-SplashScreen.preventAutoHideAsync();
+import { useColorScheme } from '@/hooks/use-color-scheme'
+import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 
 export const unstable_settings = {
   anchor: '(tabs)',
 };
 
 export default function RootLayout() {
+  useFrameworkReady();
   const colorScheme = useColorScheme();
-  // const [fontsLoaded] = useFonts({
-  //   Montserrat_100Thin: require('@/assets/fonts/Montserrat-Thin.ttf'),
-  //   Montserrat_300Light: require('@/assets/fonts/Montserrat-Light.ttf'),
-  //   Montserrat_400Regular: require('@/assets/fonts/Montserrat-Regular.ttf'),
-  //   Montserrat_600SemiBold: require('@/assets/fonts/Montserrat-SemiBold.ttf'),
-  //   Montserrat_700Bold: require('@/assets/fonts/Montserrat-Bold.ttf'),
-  // });
 
-  // useEffect(() => {
-  //   if (fontsLoaded) {
-  //     SplashScreen.hideAsync();
-  //   }
-  // }, [fontsLoaded]);
-
-  // if (!fontsLoaded) {
-  //   return null;
-  // }
+  useEffect(() => {
+    SplashScreen.hideAsync();
+  }, []);
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
