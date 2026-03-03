@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Pressable, Platform } from 'react-native';
+import { View, StyleSheet, Pressable, Platform, Dimensions } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import Animated, {
   useAnimatedStyle,
@@ -42,7 +42,8 @@ function TabIcon({ isFocused, icon }: TabIconProps) {
 }
 
 export function LiquidTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-  const tabWidth = 100 / state.routes.length;
+  const screenWidth = Dimensions.get('window').width;
+  const tabWidth = screenWidth / state.routes.length;
   const translateX = useSharedValue(state.index * tabWidth);
 
   React.useEffect(() => {
@@ -50,7 +51,7 @@ export function LiquidTabBar({ state, descriptors, navigation }: BottomTabBarPro
   }, [state.index, tabWidth, translateX]);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: translateX.value }],
+    transform: [{ translateX: `${translateX.value}px` }],
   }));
 
   return (
@@ -60,7 +61,7 @@ export function LiquidTabBar({ state, descriptors, navigation }: BottomTabBarPro
           style={[
             styles.liquidBubble,
             {
-              width: `${tabWidth}%`,
+              width: tabWidth,
             },
             animatedStyle,
           ]}
@@ -104,6 +105,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.baseLight,
     borderTopWidth: 1,
     borderTopColor: '#E5E5EA',
+    paddingBottom: Platform.select({
+      ios: 20,
+      android: 12,
+      default: 12,
+    }),
     ...Platform.select({
       ios: {
         shadowColor: '#000',
@@ -118,7 +124,7 @@ const styles = StyleSheet.create({
   },
   tabBarContainer: {
     flexDirection: 'row',
-    height: 60,
+    height: 70,
     position: 'relative',
   },
   tab: {
