@@ -43,14 +43,17 @@ function TabIcon({ index, isFocused, iconName, bubblePosition, tabWidth }: TabIc
     const tabCenter = index * tabWidth + tabWidth / 2;
     const bubbleCenter = bubblePosition.value + tabWidth / 2;
     const distance = Math.abs(bubbleCenter - tabCenter);
-    const threshold = tabWidth / 2;
+    const maxDistance = tabWidth;
+
+    // Clamp distance between 0 and maxDistance
+    const clampedDistance = Math.min(Math.max(distance, 0), maxDistance);
 
     return interpolateColor(
-      distance,
-      [0, threshold],
+      clampedDistance,
+      [0, maxDistance],
       [COLORS.white, '#8E8E93']
     );
-  }, [bubblePosition, index, tabWidth]);
+  });
 
   const animatedIconStyle = useAnimatedStyle(() => {
     return {
