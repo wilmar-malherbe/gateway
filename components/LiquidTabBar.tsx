@@ -51,7 +51,7 @@ export function LiquidTabBar({ state, descriptors, navigation }: BottomTabBarPro
   }, [state.index, tabWidth, translateX]);
 
   const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: `${translateX.value}px` }],
+    transform: [{ translateX: translateX.value }],
   }));
 
   return (
