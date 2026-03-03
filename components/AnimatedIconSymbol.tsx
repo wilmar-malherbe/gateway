@@ -15,7 +15,7 @@ export function AnimatedIconSymbol({ name, size = 24, animatedColor }: AnimatedI
     return {
       color: animatedColor.value,
     };
-  });
+  }, [animatedColor]);
 
   return <AnimatedMaterialIcons name={name} size={size} animatedProps={animatedProps} />;
 }

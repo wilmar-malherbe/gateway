@@ -50,7 +50,7 @@ function TabIcon({ index, isFocused, iconName, bubblePosition, tabWidth }: TabIc
       [0, threshold],
       [COLORS.white, '#8E8E93']
     );
-  });
+  }, [bubblePosition, index, tabWidth]);
 
   const animatedIconStyle = useAnimatedStyle(() => {
     return {
