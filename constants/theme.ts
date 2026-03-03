@@ -13,7 +13,7 @@ export const COLORS = {
   white: '#ffffff',
   text: '#1a1a1a',
   lightText: '#666666',
-  background: '#1093eb',
+  background: '#f5f5f5',
   border: '#e0e0e0',
   success: '#4caf50',
   warning: '#ff9800',

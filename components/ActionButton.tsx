@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   secondaryButton: {
     backgroundColor: COLORS.white,
     borderWidth: 2,
-    borderColor: COLORS.white,
+    borderColor: '#0d7ac4',
   },
   fullWidth: {
     flex: 1,
