@@ -6,8 +6,10 @@
 import { Platform } from 'react-native';
 
 export const COLORS = {
-  primary: '#0d2262',
-  secondary: '#394462',
+  baseLight: '#ffffff',
+  baseDark: '#262626',
+  primary: '#1093eb',
+  secondary: '#106beb',
   white: '#ffffff',
   text: '#1a1a1a',
   lightText: '#666666',
@@ -21,19 +23,23 @@ export const COLORS = {
 export const Colors = {
   light: {
     text: COLORS.text,
-    background: COLORS.white,
+    background: COLORS.baseLight,
     tint: COLORS.primary,
-    icon: COLORS.lightText,
-    tabIconDefault: COLORS.lightText,
+    icon: '#666666',
+    tabIconDefault: '#666666',
     tabIconSelected: COLORS.primary,
+    cardBackground: COLORS.baseLight,
+    border: '#e0e0e0',
   },
   dark: {
-    text: COLORS.white,
-    background: '#1a1a1a',
+    text: '#ffffff',
+    background: COLORS.baseDark,
     tint: COLORS.primary,
-    icon: COLORS.lightText,
-    tabIconDefault: COLORS.lightText,
+    icon: '#999999',
+    tabIconDefault: '#999999',
     tabIconSelected: COLORS.primary,
+    cardBackground: '#333333',
+    border: '#444444',
   },
 };
 

@@ -6,6 +6,7 @@ import Animated, {
   withSpring,
   useSharedValue,
 } from 'react-native-reanimated';
+import { COLORS } from '@/constants/theme';
 
 const SPRING_CONFIG = {
   damping: 20,
@@ -33,7 +34,7 @@ function TabIcon({ isFocused, icon }: TabIconProps) {
     <Animated.View style={animatedIconStyle}>
       {icon?.({
         focused: isFocused,
-        color: isFocused ? '#FFFFFF' : '#8E8E93',
+        color: isFocused ? COLORS.white : '#8E8E93',
         size: 24,
       })}
     </Animated.View>
@@ -100,7 +101,7 @@ export function LiquidTabBar({ state, descriptors, navigation }: BottomTabBarPro
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.baseLight,
     borderTopWidth: 1,
     borderTopColor: '#E5E5EA',
     ...Platform.select({
@@ -137,6 +138,6 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#007AFF',
+    backgroundColor: COLORS.primary,
   },
 });
