@@ -5,8 +5,11 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
   useSharedValue,
+  interpolateColor,
+  useDerivedValue,
 } from 'react-native-reanimated';
 import { COLORS } from '@/constants/theme';
+import { AnimatedIconSymbol } from './AnimatedIconSymbol';
 
 const SPRING_CONFIG = {
   damping: 20,
@@ -14,29 +17,52 @@ const SPRING_CONFIG = {
   mass: 0.8,
 };
 
+const ICON_MAPPING: Record<string, string> = {
+  'house.fill': 'home',
+  'newspaper.fill': 'newspaper',
+  'play.rectangle.fill': 'play-circle',
+  'ellipsis.circle.fill': 'more-horiz',
+};
+
 interface TabIconProps {
+  index: number;
   isFocused: boolean;
-  icon: ((props: { focused: boolean; color: string; size: number }) => React.ReactNode) | undefined;
+  iconName: string;
+  bubblePosition: Animated.SharedValue<number>;
+  tabWidth: number;
 }
 
-function TabIcon({ isFocused, icon }: TabIconProps) {
+function TabIcon({ index, isFocused, iconName, bubblePosition, tabWidth }: TabIconProps) {
   const scale = useSharedValue(isFocused ? 1.2 : 1);
 
   React.useEffect(() => {
     scale.value = withSpring(isFocused ? 1.2 : 1, SPRING_CONFIG);
   }, [isFocused, scale]);
 
-  const animatedIconStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-  }));
+  const animatedColor = useDerivedValue(() => {
+    const tabCenter = index * tabWidth + tabWidth / 2;
+    const bubbleCenter = bubblePosition.value + tabWidth / 2;
+    const distance = Math.abs(bubbleCenter - tabCenter);
+    const threshold = tabWidth / 2;
+
+    return interpolateColor(
+      distance,
+      [0, threshold],
+      [COLORS.white, '#8E8E93']
+    );
+  });
+
+  const animatedIconStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  const materialIconName = ICON_MAPPING[iconName] || 'home';
 
   return (
     <Animated.View style={animatedIconStyle}>
-      {icon?.({
-        focused: isFocused,
-        color: isFocused ? COLORS.white : '#8E8E93',
-        size: 24,
-      })}
+      <AnimatedIconSymbol name={materialIconName} size={24} animatedColor={animatedColor} />
     </Animated.View>
   );
 }
@@ -85,13 +111,34 @@ export function LiquidTabBar({ state, descriptors, navigation }: BottomTabBarPro
             }
           };
 
+          const getIconName = () => {
+            switch (route.name) {
+              case 'index':
+                return 'house.fill';
+              case 'news':
+                return 'newspaper.fill';
+              case 'videos':
+                return 'play.rectangle.fill';
+              case 'menu':
+                return 'ellipsis.circle.fill';
+              default:
+                return 'house.fill';
+            }
+          };
+
           return (
             <Pressable
               key={route.key}
               onPress={onPress}
               style={styles.tab}
             >
-              <TabIcon isFocused={isFocused} icon={options.tabBarIcon} />
+              <TabIcon
+                index={index}
+                isFocused={isFocused}
+                iconName={getIconName()}
+                bubblePosition={translateX}
+                tabWidth={tabWidth}
+              />
             </Pressable>
           );
         })}
