@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { COLORS, Fonts, SPACING, BORDER_RADIUS, SHADOWS } from '@/constants/theme';
+import { COLORS, Fonts, SPACING, BORDER_RADIUS } from '@/constants/theme';
 
 interface InfoCardProps {
   icon: string;
@@ -49,11 +49,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: SPACING.md,
-    ...SHADOWS.small,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
   },
   clickable: {
     borderWidth: 1,
-    borderColor: COLORS.border,
+    borderColor: '#90caf9',
   },
   iconContainer: {
     width: 56,

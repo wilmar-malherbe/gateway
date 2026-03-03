@@ -1,5 +1,5 @@
 export const CHURCH_INFO = {
-  name: 'Calvary Chapel Inland',
+  name: 'NG Kerk Helderberg',
   address: '460 Alessandro Blvd, Riverside, CA 92508',
   phone: '(951) 687-6902',
   email: 'office@ccriverside.org',

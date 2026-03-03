@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { LinearGradient } from "expo-linear-gradient";
 import { COLORS, Fonts, SPACING, BORDER_RADIUS } from '@/constants/theme';
 
 interface HeroSectionProps {
@@ -10,16 +9,11 @@ interface HeroSectionProps {
 
 export function HeroSection({ title, subtitle }: HeroSectionProps) {
   return (
-    <LinearGradient
-      colors={[COLORS.primary, COLORS.secondary]}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
-      style={styles.container}
-    >
+    <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.logoContainer}>
           <Image
-            source={{ uri: 'https://ccriverside.org/wp-content/uploads/2019/11/logo.png' }}
+            source={require('@/assets/images/headerImage copy.jpg')}
             style={styles.logo}
             resizeMode="contain"
           />
@@ -27,12 +21,13 @@ export function HeroSection({ title, subtitle }: HeroSectionProps) {
         <Text style={styles.title}>{title}</Text>
         {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
       </View>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: COLORS.white,
     paddingVertical: SPACING.xxl,
     paddingHorizontal: SPACING.lg,
     borderBottomLeftRadius: BORDER_RADIUS.lg,
@@ -47,12 +42,12 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 120,
-    height: 80,
+    height: 120,
   },
   title: {
     fontSize: 28,
     fontFamily: Fonts.bold,
-    color: COLORS.white,
+    color: COLORS.text,
     textAlign: 'center',
     marginBottom: SPACING.sm,
     fontWeight: '700',
@@ -60,7 +55,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 14,
     fontFamily: Fonts.light,
-    color: '#e8eef7',
+    color: COLORS.lightText,
     textAlign: 'center',
     fontWeight: '300',
   },

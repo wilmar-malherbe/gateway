@@ -27,14 +27,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontFamily: Fonts.bold,
-    color: COLORS.text,
+    color: COLORS.white,
     fontWeight: '700',
     marginBottom: SPACING.md,
   },
   subtitle: {
     fontSize: 16,
     fontFamily: Fonts.regular,
-    color: COLORS.lightText,
+    color: '#e3f2fd',
     fontWeight: '400',
   },
 });

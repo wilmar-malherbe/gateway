@@ -8,7 +8,7 @@ import {
   GestureResponderEvent,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { COLORS, Fonts, SPACING, BORDER_RADIUS, SHADOWS } from '@/constants/theme';
+import { COLORS, Fonts, SPACING, BORDER_RADIUS } from '@/constants/theme';
 
 interface ActionButtonProps {
   label: string;
@@ -43,13 +43,13 @@ export function ActionButton({
       activeOpacity={0.7}
     >
       {loading ? (
-        <ActivityIndicator color={isPrimary ? COLORS.white : COLORS.primary} />
+        <ActivityIndicator color={isPrimary ? COLORS.white : '#0d7ac4'} />
       ) : (
         <View style={styles.content}>
           <MaterialCommunityIcons
             name={icon as any}
             size={20}
-            color={isPrimary ? COLORS.white : COLORS.primary}
+            color={isPrimary ? COLORS.white : '#0d7ac4'}
           />
           <Text
             style={[
@@ -74,15 +74,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: 48,
-    ...SHADOWS.small,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
   },
   primaryButton: {
-    backgroundColor: COLORS.primary,
+    backgroundColor: '#0d7ac4',
   },
   secondaryButton: {
     backgroundColor: COLORS.white,
     borderWidth: 2,
-    borderColor: COLORS.primary,
+    borderColor: COLORS.white,
   },
   fullWidth: {
     flex: 1,
@@ -101,6 +105,6 @@ const styles = StyleSheet.create({
     color: COLORS.white,
   },
   secondaryLabel: {
-    color: COLORS.primary,
+    color: '#0d7ac4',
   },
 });

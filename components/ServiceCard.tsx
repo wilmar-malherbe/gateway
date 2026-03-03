@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { COLORS, Fonts, SPACING, BORDER_RADIUS, SHADOWS } from '@/constants/theme';
+import { COLORS, Fonts, SPACING, BORDER_RADIUS } from '@/constants/theme';
 
 interface ServiceCardProps {
   time: string;
@@ -36,8 +36,12 @@ const styles = StyleSheet.create({
     padding: SPACING.lg,
     marginBottom: SPACING.md,
     borderLeftWidth: 4,
-    borderLeftColor: COLORS.primary,
-    ...SHADOWS.small,
+    borderLeftColor: '#0d7ac4',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 4,
   },
   upcomingCard: {
     borderLeftColor: COLORS.success,
