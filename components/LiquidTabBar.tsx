@@ -40,8 +40,17 @@ function TabIcon({ index, isFocused, iconName, bubblePosition, tabWidth }: TabIc
   }, [isFocused, scale]);
 
   const animatedColor = useDerivedValue(() => {
-    return isFocused ? COLORS.white : '#8E8E93';
-  }, [isFocused]);
+    const tabCenter = index * tabWidth + tabWidth / 2;
+    const bubbleCenter = bubblePosition.value + tabWidth / 2;
+    const distance = Math.abs(bubbleCenter - tabCenter);
+    const threshold = tabWidth / 2;
+
+    return interpolateColor(
+      distance,
+      [0, threshold],
+      [COLORS.white, '#8E8E93']
+    );
+  });
 
   const animatedIconStyle = useAnimatedStyle(() => {
     return {
