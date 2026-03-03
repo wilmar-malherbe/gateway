@@ -40,20 +40,8 @@ function TabIcon({ index, isFocused, iconName, bubblePosition, tabWidth }: TabIc
   }, [isFocused, scale]);
 
   const animatedColor = useDerivedValue(() => {
-    const tabCenter = index * tabWidth + tabWidth / 2;
-    const bubbleCenter = bubblePosition.value + tabWidth / 2;
-    const distance = Math.abs(bubbleCenter - tabCenter);
-    const maxDistance = tabWidth;
-
-    // Clamp distance between 0 and maxDistance
-    const clampedDistance = Math.min(Math.max(distance, 0), maxDistance);
-
-    return interpolateColor(
-      clampedDistance,
-      [0, maxDistance],
-      [COLORS.white, '#8E8E93']
-    );
-  });
+    return isFocused ? COLORS.white : '#8E8E93';
+  }, [isFocused]);
 
   const animatedIconStyle = useAnimatedStyle(() => {
     return {
