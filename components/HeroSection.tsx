@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { COLORS, Fonts, SPACING, BORDER_RADIUS } from '@/constants/theme';
 
 interface HeroSectionProps {
@@ -18,8 +17,12 @@ export function HeroSection({ title, subtitle }: HeroSectionProps) {
       style={styles.container}
     >
       <View style={styles.content}>
-        <View style={styles.iconContainer}>
-          <MaterialCommunityIcons name="church" size={48} color={COLORS.white} />
+        <View style={styles.logoContainer}>
+          <Image
+            source={{ uri: 'https://ccriverside.org/wp-content/uploads/2019/11/logo.png' }}
+            style={styles.logo}
+            resizeMode="contain"
+          />
         </View>
         <Text style={styles.title}>{title}</Text>
         {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
@@ -39,8 +42,12 @@ const styles = StyleSheet.create({
   content: {
     alignItems: 'center',
   },
-  iconContainer: {
+  logoContainer: {
     marginBottom: SPACING.md,
+  },
+  logo: {
+    width: 120,
+    height: 80,
   },
   title: {
     fontSize: 28,
