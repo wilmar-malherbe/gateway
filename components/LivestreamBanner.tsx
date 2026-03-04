@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { COLORS, Fonts, SPACING, BORDER_RADIUS } from '@/constants/theme';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translate } from '@/translations';
 
 interface LivestreamBannerProps {
   isActive: boolean;
@@ -10,6 +12,9 @@ interface LivestreamBannerProps {
 }
 
 export function LivestreamBanner({ isActive, youtubeUrl, title }: LivestreamBannerProps) {
+  const { language } = useLanguage();
+  const t = translate(language);
+
   if (!isActive) {
     return null;
   }
@@ -33,8 +38,8 @@ export function LivestreamBanner({ isActive, youtubeUrl, title }: LivestreamBann
           <View style={styles.liveDot} />
           <Text style={styles.liveText}>LIVE</Text>
         </View>
-        <Text style={styles.title}>{title || 'Watch Live Service'}</Text>
-        <Text style={styles.subtitle}>Join us now on YouTube</Text>
+        <Text style={styles.title}>{title || t.livestream.watchNow}</Text>
+        <Text style={styles.subtitle}>{t.livestream.joinLiveService}</Text>
       </View>
       <MaterialCommunityIcons name="play-circle" size={32} color={COLORS.white} />
     </TouchableOpacity>

@@ -11,7 +11,7 @@ import {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS, SPACING } from '@/constants/theme';
 import { CHURCH_INFO } from '@/constants/church';
-import { HeroSection } from '@/components/HeroSection';
+import { WelcomeSection } from '@/components/WelcomeSection';
 import { SectionHeader } from '@/components/SectionHeader';
 import { ServiceCard } from '@/components/ServiceCard';
 import { ActionButton } from '@/components/ActionButton';
@@ -20,10 +20,14 @@ import { LivestreamBanner } from '@/components/LivestreamBanner';
 import { useServices } from '@/hooks/useServices';
 import { useLivestream } from '@/hooks/useLivestream';
 import { useContactInfo } from '@/hooks/useContactInfo';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translate } from '@/translations';
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const [refreshing, setRefreshing] = useState(false);
+  const { language } = useLanguage();
+  const t = translate(language);
 
   const { services, refetch: refetchServices } = useServices();
   const { livestream, refetch: refetchLivestream } = useLivestream();
@@ -58,16 +62,13 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { paddingTop: insets.top }]}>
+    <SafeAreaView style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         contentContainerStyle={styles.scrollContent}
       >
-        <HeroSection
-          title={CHURCH_INFO.name}
-          subtitle="Welcome to our community of faith"
-        />
+        <WelcomeSection />
 
         <View style={styles.contentPadding}>
           <LivestreamBanner
@@ -77,8 +78,8 @@ export default function HomeScreen() {
           />
 
           <SectionHeader
-            title="Sunday Services"
-            subtitle="Join us this week"
+            title={t.home.sundayServices}
+            subtitle={t.home.sundayServicesSubtitle}
           />
 
           {services.length > 0 ? (
@@ -103,19 +104,19 @@ export default function HomeScreen() {
           <View style={styles.spacer} />
 
           <SectionHeader
-            title="Connect With Us"
-            subtitle="Stay updated and give"
+            title={t.home.connectWithUs}
+            subtitle={t.home.connectWithUsSubtitle}
           />
 
           <View style={styles.actionButtonsContainer}>
             <ActionButton
-              label="Donate"
+              label={t.home.donate}
               icon="heart"
               onPress={handleDonate}
               fullWidth
             />
             <ActionButton
-              label="Contact"
+              label={t.home.contact}
               icon="phone"
               onPress={handleCall}
               variant="secondary"
@@ -127,11 +128,11 @@ export default function HomeScreen() {
 
           {contactInfo && (
             <>
-              <SectionHeader title="Office Information" />
+              <SectionHeader title={t.home.officeInformation} />
 
               <InfoCard
                 icon="phone"
-                title="Call Us"
+                title={t.contact.callUs}
                 content={contactInfo.phone_number}
                 isClickable
                 onPress={handleCall}
@@ -140,7 +141,7 @@ export default function HomeScreen() {
               {contactInfo.email && (
                 <InfoCard
                   icon="email"
-                  title="Email"
+                  title={t.contact.email}
                   content={contactInfo.email}
                   isClickable
                   onPress={handleEmail}
@@ -150,14 +151,14 @@ export default function HomeScreen() {
               {contactInfo.hours_of_operation && (
                 <InfoCard
                   icon="clock-outline"
-                  title="Office Hours"
+                  title={t.contact.officeHours}
                   content={contactInfo.hours_of_operation}
                 />
               )}
 
               <InfoCard
                 icon="map-marker"
-                title="Address"
+                title={t.contact.address}
                 content={CHURCH_INFO.address}
               />
             </>
