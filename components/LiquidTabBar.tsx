@@ -106,10 +106,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#E5E5EA',
     paddingBottom: Platform.select({
-      ios: 20,
-      android: 12,
-      default: 12,
+      ios: 34,
+      android: 20,
+      default: 20,
     }),
+    paddingTop: 8,
     ...Platform.select({
       ios: {
         shadowColor: '#000',

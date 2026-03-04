@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.white,
     paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.sm,
+    paddingVertical: SPACING.lg,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -48,12 +48,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logo: {
-    width: 50,
-    height: 50,
+    width: 60,
+    height: 60,
   },
   centerSection: {
-    flex: 1,
-    alignItems: 'center',
+    flex: 0.5,
+    alignItems: 'flex-end',
+    paddingRight: SPACING.sm,
   },
   profileButton: {
     width: 44,
