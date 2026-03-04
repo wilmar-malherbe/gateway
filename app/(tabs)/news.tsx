@@ -28,13 +28,11 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontFamily: Fonts.bold,
     color: COLORS.text,
-    fontWeight: '700',
     marginBottom: SPACING.md,
   },
   subtitle: {
     fontSize: 16,
     fontFamily: Fonts.regular,
     color: COLORS.lightText,
-    fontWeight: '400',
   },
 });

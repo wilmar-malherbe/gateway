@@ -25,12 +25,10 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.bold,
     color: COLORS.text,
     marginBottom: SPACING.xs,
-    fontWeight: '700',
   },
   subtitle: {
     fontSize: 13,
     fontFamily: Fonts.regular,
     color: COLORS.lightText,
-    fontWeight: '400',
   },
 });

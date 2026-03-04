@@ -79,13 +79,11 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     textAlign: 'center',
     marginBottom: SPACING.sm,
-    fontWeight: '700',
   },
   subtitle: {
     fontSize: 14,
     fontFamily: Fonts.light,
     color: COLORS.lightText,
     textAlign: 'center',
-    fontWeight: '300',
   },
 });

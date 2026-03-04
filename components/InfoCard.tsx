@@ -75,12 +75,10 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.semibold,
     color: COLORS.text,
     marginBottom: SPACING.xs,
-    fontWeight: '600',
   },
   text: {
     fontSize: 12,
     fontFamily: Fonts.regular,
     color: COLORS.lightText,
-    fontWeight: '400',
   },
 });

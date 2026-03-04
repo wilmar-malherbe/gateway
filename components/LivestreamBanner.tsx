@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontFamily: Fonts.bold,
     color: COLORS.white,
-    fontWeight: '700',
     letterSpacing: 1,
   },
   title: {
@@ -84,12 +83,10 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.semibold,
     color: COLORS.white,
     marginBottom: SPACING.xs,
-    fontWeight: '600',
   },
   subtitle: {
     fontSize: 12,
     fontFamily: Fonts.regular,
     color: '#f5f5f5',
-    fontWeight: '400',
   },
 });

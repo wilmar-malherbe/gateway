@@ -43,6 +43,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: Fonts.semibold,
     color: COLORS.primary,
-    fontWeight: '600',
   },
 });

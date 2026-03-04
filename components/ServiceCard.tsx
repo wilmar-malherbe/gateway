@@ -62,14 +62,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: Fonts.semibold,
     color: COLORS.text,
-    fontWeight: '600',
   },
   description: {
     fontSize: 14,
     fontFamily: Fonts.regular,
     color: COLORS.lightText,
     marginBottom: SPACING.md,
-    fontWeight: '400',
   },
   capacityContainer: {
     flexDirection: 'row',
@@ -80,7 +78,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: Fonts.light,
     color: COLORS.lightText,
-    fontWeight: '300',
   },
   upcomingBadge: {
     width: 12,

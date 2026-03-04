@@ -44,14 +44,12 @@ const styles = StyleSheet.create({
     fontSize: 26,
     fontFamily: Fonts.bold,
     color: COLORS.text,
-    fontWeight: '700',
     marginBottom: SPACING.sm,
   },
   inspirationText: {
     fontSize: 14,
     fontFamily: Fonts.light,
     color: COLORS.lightText,
-    fontWeight: '300',
     lineHeight: 20,
   },
 });

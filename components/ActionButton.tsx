@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontFamily: Fonts.semibold,
-    fontWeight: '600',
   },
   primaryLabel: {
     color: COLORS.white,
