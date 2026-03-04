@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.white,
     paddingBottom: Platform.select({
-      ios: 28,
+      ios: 20,
       android: 16,
       default: 16,
     }),

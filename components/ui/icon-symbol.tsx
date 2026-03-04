@@ -21,6 +21,7 @@ const MAPPING = {
   'newspaper.fill': 'newspaper',
   'play.rectangle.fill': 'play-circle',
   'ellipsis.circle.fill': 'more-horiz',
+  'calendar': 'event',
 } as IconMapping;
 
 /**
