@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import * as Crypto from 'expo-crypto';
 import { supabase } from '@/lib/supabase';
 
 export type Language = 'afr' | 'eng';
@@ -14,9 +13,17 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 let sessionId: string | null = null;
 
+const generateUUID = (): string => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
+
 const getSessionId = () => {
   if (!sessionId) {
-    sessionId = Crypto.randomUUID();
+    sessionId = generateUUID();
   }
   return sessionId;
 };
