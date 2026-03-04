@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Crypto from 'expo-crypto';
+import { supabase } from '@/lib/supabase';
 
 export type Language = 'afr' | 'eng';
 
@@ -11,7 +12,14 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const LANGUAGE_STORAGE_KEY = '@ngk_app_language';
+let sessionId: string | null = null;
+
+const getSessionId = () => {
+  if (!sessionId) {
+    sessionId = Crypto.randomUUID();
+  }
+  return sessionId;
+};
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>('afr');
@@ -23,9 +31,18 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const loadLanguagePreference = async () => {
     try {
-      const savedLanguage = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
-      if (savedLanguage === 'afr' || savedLanguage === 'eng') {
-        setLanguageState(savedLanguage);
+      const currentSessionId = getSessionId();
+
+      const { data, error } = await supabase
+        .from('user_preferences')
+        .select('language')
+        .eq('session_id', currentSessionId)
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error loading language preference:', error);
+      } else if (data && (data.language === 'afr' || data.language === 'eng')) {
+        setLanguageState(data.language);
       }
     } catch (error) {
       console.error('Failed to load language preference:', error);
@@ -36,8 +53,26 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setLanguage = async (lang: Language) => {
     try {
-      await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
-      setLanguageState(lang);
+      const currentSessionId = getSessionId();
+
+      const { error } = await supabase
+        .from('user_preferences')
+        .upsert(
+          {
+            session_id: currentSessionId,
+            language: lang,
+            updated_at: new Date().toISOString(),
+          },
+          {
+            onConflict: 'session_id',
+          }
+        );
+
+      if (error) {
+        console.error('Error saving language preference:', error);
+      } else {
+        setLanguageState(lang);
+      }
     } catch (error) {
       console.error('Failed to save language preference:', error);
     }

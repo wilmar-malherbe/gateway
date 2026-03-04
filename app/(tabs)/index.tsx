@@ -8,7 +8,6 @@ import {
   Linking,
   Alert,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { COLORS, SPACING } from '@/constants/theme';
 import { CHURCH_INFO } from '@/constants/church';
 import { WelcomeSection } from '@/components/WelcomeSection';
@@ -24,7 +23,6 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { translate } from '@/translations';
 
 export default function HomeScreen() {
-  const insets = useSafeAreaInsets();
   const [refreshing, setRefreshing] = useState(false);
   const { language } = useLanguage();
   const t = translate(language);

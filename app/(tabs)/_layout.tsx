@@ -1,7 +1,6 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { LiquidTabBar } from '@/components/LiquidTabBar';
@@ -9,11 +8,9 @@ import { StickyHeader } from '@/components/StickyHeader';
 import { COLORS } from '@/constants/theme';
 
 export default function TabLayout() {
-  const insets = useSafeAreaInsets();
-
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.headerContainer, { paddingTop: insets.top }]}>
+      <View style={styles.headerContainer}>
         <StickyHeader />
       </View>
       <Tabs

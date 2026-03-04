@@ -36,7 +36,7 @@ export function WelcomeSection() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.white,
-    paddingVertical: SPACING.xl,
+    paddingVertical: SPACING.md,
     paddingHorizontal: SPACING.lg,
     marginBottom: SPACING.md,
   },
