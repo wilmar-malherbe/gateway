@@ -104,15 +104,15 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.white,
     paddingBottom: Platform.select({
-      ios: 34,
-      android: 20,
-      default: 20,
+      ios: 28,
+      android: 16,
+      default: 16,
     }),
-    paddingTop: 8,
+    paddingTop: 4,
   },
   tabBarContainer: {
     flexDirection: 'row',
-    height: 70,
+    height: 60,
     position: 'relative',
   },
   tab: {
@@ -129,9 +129,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bubble: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     backgroundColor: COLORS.primary,
   },
 });
