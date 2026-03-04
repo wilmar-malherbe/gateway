@@ -55,48 +55,51 @@ export function LiquidTabBar({ state, descriptors, navigation }: BottomTabBarPro
   }));
 
   return (
-    <View style={styles.container}>
-      <View style={styles.tabBarContainer}>
-        <Animated.View
-          style={[
-            styles.liquidBubble,
-            {
-              width: tabWidth,
-            },
-            animatedStyle,
-          ]}
-        >
-          <View style={styles.bubble} />
-        </Animated.View>
+    <>
+      <View style={styles.container}>
+        <View style={styles.tabBarContainer}>
+          <Animated.View
+            style={[
+              styles.liquidBubble,
+              {
+                width: tabWidth,
+              },
+              animatedStyle,
+            ]}
+          >
+            <View style={styles.bubble} />
+          </Animated.View>
 
-        {state.routes.map((route, index) => {
-          const { options } = descriptors[route.key];
-          const isFocused = state.index === index;
+          {state.routes.map((route, index) => {
+            const { options } = descriptors[route.key];
+            const isFocused = state.index === index;
 
-          const onPress = () => {
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            });
+            const onPress = () => {
+              const event = navigation.emit({
+                type: 'tabPress',
+                target: route.key,
+                canPreventDefault: true,
+              });
 
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name);
-            }
-          };
+              if (!isFocused && !event.defaultPrevented) {
+                navigation.navigate(route.name);
+              }
+            };
 
-          return (
-            <Pressable
-              key={route.key}
-              onPress={onPress}
-              style={styles.tab}
-            >
-              <TabIcon isFocused={isFocused} icon={options.tabBarIcon} />
-            </Pressable>
-          );
-        })}
+            return (
+              <Pressable
+                key={route.key}
+                onPress={onPress}
+                style={styles.tab}
+              >
+                <TabIcon isFocused={isFocused} icon={options.tabBarIcon} />
+              </Pressable>
+            );
+          })}
+        </View>
       </View>
-    </View>
+      <View style={styles.bottomFill} />
+    </>
   );
 }
 
@@ -146,5 +149,14 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 28,
     backgroundColor: COLORS.primary,
+  },
+  bottomFill: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 100,
+    backgroundColor: COLORS.baseLight,
+    zIndex: -1,
   },
 });
