@@ -11,6 +11,8 @@ export const eng = {
   home: {
     sundayServices: 'Sunday Services',
     sundayServicesSubtitle: 'Join us for regular worship services',
+    seasonSummer: 'Service Times - Summer',
+    seasonWinter: 'Service Times - Winter',
     connectWithUs: 'Connect With Us',
     connectWithUsSubtitle: 'Get in touch with our community',
     officeInformation: 'Office Information',

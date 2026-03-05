@@ -12,13 +12,14 @@ import { COLORS, SPACING } from '@/constants/theme';
 import { CHURCH_INFO } from '@/constants/church';
 import { WelcomeSection } from '@/components/WelcomeSection';
 import { SectionHeader } from '@/components/SectionHeader';
-import { ServiceCard } from '@/components/ServiceCard';
 import { ActionButton } from '@/components/ActionButton';
 import { InfoCard } from '@/components/InfoCard';
 import { LivestreamBanner } from '@/components/LivestreamBanner';
-import { useServices } from '@/hooks/useServices';
+import { SeasonHeader } from '@/components/SeasonHeader';
+import { ServiceCarousel } from '@/components/ServiceCarousel';
 import { useLivestream } from '@/hooks/useLivestream';
 import { useContactInfo } from '@/hooks/useContactInfo';
+import { useSeasonalServices } from '@/hooks/useSeasonalServices';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { translate } from '@/translations';
 
@@ -27,7 +28,7 @@ export default function HomeScreen() {
   const { language } = useLanguage();
   const t = translate(language);
 
-  const { services, refetch: refetchServices } = useServices();
+  const { services, seasonConfig, refetch: refetchServices } = useSeasonalServices();
   const { livestream, refetch: refetchLivestream } = useLivestream();
   const { contactInfo, refetch: refetchContactInfo } = useContactInfo();
 
@@ -75,29 +76,10 @@ export default function HomeScreen() {
             title={livestream?.title ?? undefined}
           />
 
-          <SectionHeader
-            title={t.home.sundayServices}
-            subtitle={t.home.sundayServicesSubtitle}
-          />
-
-          {services.length > 0 ? (
-            services.map((service, index) => (
-              <ServiceCard
-                key={service.id}
-                time={service.service_time}
-                description={service.description}
-                capacity={service.capacity.toString()}
-                isUpcoming={index === 1}
-              />
-            ))
-          ) : (
-            <ServiceCard
-              time="8:00 AM"
-              description="Traditional Service"
-              capacity="200"
-              isUpcoming={false}
-            />
-          )}
+          <View style={styles.seasonalServicesSection}>
+            <SeasonHeader isSummer={seasonConfig?.is_summer ?? true} />
+            <ServiceCarousel services={services} />
+          </View>
 
           <View style={styles.spacer} />
 
@@ -182,6 +164,9 @@ const styles = StyleSheet.create({
   },
   spacer: {
     height: SPACING.xxl,
+  },
+  seasonalServicesSection: {
+    marginBottom: SPACING.lg,
   },
   actionButtonsContainer: {
     flexDirection: 'row',

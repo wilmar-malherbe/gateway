@@ -11,6 +11,8 @@ export const afr = {
   home: {
     sundayServices: 'Sondagdienste',
     sundayServicesSubtitle: 'Sluit aan by ons gereelde aanbiddingsdienste',
+    seasonSummer: 'Eredienstye - Somer',
+    seasonWinter: 'Eredienstye - Winter',
     connectWithUs: 'Kontak Ons',
     connectWithUsSubtitle: 'Kom in aanraking met ons gemeenskap',
     officeInformation: 'Kantoormformasie',
