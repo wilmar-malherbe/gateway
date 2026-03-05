@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
   },
   textPill: {
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     borderRadius: 25,
     shadowColor: '#000',
     shadowOffset: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   seasonText: {
-    fontSize: 22,
+    fontSize: 18,
     fontFamily: 'Montserrat-SemiBold',
     color: '#333',
     textAlign: 'center',

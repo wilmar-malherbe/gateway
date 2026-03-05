@@ -121,14 +121,6 @@ const styles = StyleSheet.create({
     padding: 24,
     minHeight: 180,
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 8,
   },
   serviceName: {
     fontSize: 20,
@@ -165,7 +157,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ddd',
   },
   paginationDotActive: {
-    backgroundColor: '#8B4513',
+    backgroundColor: '#1093eb',
     width: 24,
   },
   emptyContainer: {
