@@ -16,8 +16,9 @@ interface ServiceCarouselProps {
 }
 
 const { width } = Dimensions.get('window');
-const CARD_WIDTH = width - 48;
+const HORIZONTAL_PADDING = 24;
 const CARD_SPACING = 16;
+const CARD_WIDTH = width - (HORIZONTAL_PADDING * 2);
 
 export function ServiceCarousel({ services }: ServiceCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -40,20 +41,18 @@ export function ServiceCarousel({ services }: ServiceCarouselProps) {
     const serviceName = language === 'afr' ? item.service_name_afr : item.service_name_eng;
 
     return (
-      <View style={styles.cardContainer}>
-        <View style={styles.card}>
-          <Text style={styles.serviceName}>{serviceName}</Text>
+      <View style={styles.card}>
+        <Text style={styles.serviceName}>{serviceName}</Text>
 
-          <View style={styles.detailsContainer}>
-            <View style={styles.detailRow}>
-              <Clock size={20} color="#666" strokeWidth={2} />
-              <Text style={styles.detailText}>{item.service_time}</Text>
-            </View>
+        <View style={styles.detailsContainer}>
+          <View style={styles.detailRow}>
+            <Clock size={20} color="#666" strokeWidth={2} />
+            <Text style={styles.detailText}>{item.service_time}</Text>
+          </View>
 
-            <View style={styles.detailRow}>
-              <MapPin size={20} color="#666" strokeWidth={2} />
-              <Text style={styles.detailText}>{item.venue}</Text>
-            </View>
+          <View style={styles.detailRow}>
+            <MapPin size={20} color="#666" strokeWidth={2} />
+            <Text style={styles.detailText}>{item.venue}</Text>
           </View>
         </View>
       </View>
@@ -95,8 +94,10 @@ export function ServiceCarousel({ services }: ServiceCarouselProps) {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         snapToInterval={CARD_WIDTH + CARD_SPACING}
+        snapToAlignment="start"
         decelerationRate="fast"
         contentContainerStyle={styles.flatListContent}
+        ItemSeparatorComponent={() => <View style={{ width: CARD_SPACING }} />}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={viewabilityConfig}
       />
@@ -110,13 +111,10 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   flatListContent: {
-    paddingHorizontal: 24,
-  },
-  cardContainer: {
-    width: CARD_WIDTH,
-    marginRight: CARD_SPACING,
+    paddingHorizontal: HORIZONTAL_PADDING,
   },
   card: {
+    width: CARD_WIDTH,
     backgroundColor: '#fff',
     borderRadius: 20,
     padding: 24,
