@@ -111,10 +111,10 @@ const styles = StyleSheet.create({
   },
   flatListContent: {
     paddingHorizontal: 24,
-    gap: CARD_SPACING,
   },
   cardContainer: {
     width: CARD_WIDTH,
+    marginRight: CARD_SPACING,
   },
   card: {
     backgroundColor: '#fff',
