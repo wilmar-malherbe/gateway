@@ -17,6 +17,7 @@ interface ServiceCarouselProps {
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width - 48;
+const CARD_SPACING = 16;
 
 export function ServiceCarousel({ services }: ServiceCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -93,7 +94,7 @@ export function ServiceCarousel({ services }: ServiceCarouselProps) {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        snapToInterval={CARD_WIDTH + 24}
+        snapToInterval={CARD_WIDTH + CARD_SPACING}
         decelerationRate="fast"
         contentContainerStyle={styles.flatListContent}
         onViewableItemsChanged={onViewableItemsChanged}
@@ -110,10 +111,10 @@ const styles = StyleSheet.create({
   },
   flatListContent: {
     paddingHorizontal: 24,
+    gap: CARD_SPACING,
   },
   cardContainer: {
     width: CARD_WIDTH,
-    marginRight: 24,
   },
   card: {
     backgroundColor: '#fff',
