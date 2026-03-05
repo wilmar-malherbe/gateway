@@ -1,8 +1,8 @@
 export const CHURCH_INFO = {
   name: 'NG Kerk Helderberg',
-  address: '460 Alessandro Blvd, Riverside, CA 92508',
-  phone: '(951) 687-6902',
-  email: 'office@ccriverside.org',
+  address: '82 Firmount Road, Somerset West, 7130, South Africa',
+  phone: '+27 (21) 851 5582',
+  email: 'ontvangs@nghelder.co.za',
   officeHours: 'Monday - Friday: 9:00 AM - 5:00 PM',
   donationLink: 'https://ccriverside.org/give',
   youtubeChannel: 'https://www.youtube.com/@CalvaryChapelInland',
