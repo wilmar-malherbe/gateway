@@ -1,12 +1,14 @@
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { translate } from '@/translations';
 
 interface SeasonHeaderProps {
   isSummer: boolean;
 }
 
 export function SeasonHeader({ isSummer }: SeasonHeaderProps) {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const t = translate(language);
 
   const seasonText = isSummer ? t.home.seasonSummer : t.home.seasonWinter;
 
