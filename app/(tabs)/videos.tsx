@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, Fonts, SPACING } from '@/constants/theme';
-import { StickyHeader } from '@/components/StickyHeader';
 import { VideoCard } from '@/components/VideoCard';
 import { LiveStreamCard } from '@/components/LiveStreamCard';
 import { useYouTubeVideos } from '@/hooks/useYouTubeVideos';
@@ -74,8 +73,6 @@ export default function VideosScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-      <StickyHeader title={t.videos.title} />
-
       {loading && !refreshing ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={COLORS.primary} />
