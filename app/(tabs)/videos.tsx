@@ -73,7 +73,7 @@ export default function VideosScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={styles.container} edges={[]}>
       <PlatformSelector />
       {loading && !refreshing ? (
         <View style={styles.loadingContainer}>
