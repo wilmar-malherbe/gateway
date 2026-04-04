@@ -4,7 +4,6 @@ import { YouTubeVideo, YouTubeApiVideo, YouTubeApiVideoDetails } from '@/types/y
 
 const YOUTUBE_API_BASE = 'https://www.googleapis.com/youtube/v3';
 const CACHE_DURATION = 5 * 60 * 1000;
-const CHANNEL_ID = 'UC-S0Gm3Bl2-OxVP-3_W2Wug';
 
 export function useYouTubeVideos() {
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
@@ -37,10 +36,10 @@ export function useYouTubeVideos() {
     }
   };
 
-  const fetchLiveStream = async (apiKey: string): Promise<YouTubeVideo | null> => {
+  const fetchLiveStream = async (apiKey: string, channelId: string): Promise<YouTubeVideo | null> => {
     try {
       const response = await fetch(
-        `${YOUTUBE_API_BASE}/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&maxResults=1&key=${apiKey}`
+        `${YOUTUBE_API_BASE}/search?part=snippet&channelId=${channelId}&eventType=live&type=video&maxResults=1&key=${apiKey}`
       );
 
       if (!response.ok) {
@@ -95,13 +94,13 @@ export function useYouTubeVideos() {
     }
   };
 
-  const fetchVideosFromYouTube = async (apiKey: string): Promise<YouTubeVideo[]> => {
+  const fetchVideosFromYouTube = async (apiKey: string, channelId: string): Promise<YouTubeVideo[]> => {
     try {
       const trimmedKey = apiKey.trim();
       console.log('Fetching videos from YouTube API...');
 
       const response = await fetch(
-        `${YOUTUBE_API_BASE}/search?part=snippet&channelId=${CHANNEL_ID}&order=date&type=video&maxResults=50&key=${trimmedKey}`
+        `${YOUTUBE_API_BASE}/search?part=snippet&channelId=${channelId}&order=date&type=video&maxResults=50&key=${trimmedKey}`
       );
 
       if (!response.ok) {
@@ -191,7 +190,7 @@ export function useYouTubeVideos() {
       if (shouldFetchFromAPI) {
         const { data: config, error: configError } = await supabase
           .from('youtube_config')
-          .select('api_key')
+          .select('api_key, channel_id')
           .single();
 
         if (configError) {
@@ -209,21 +208,27 @@ export function useYouTubeVideos() {
           return;
         }
 
-        const freshVideos = await fetchVideosFromYouTube(config.api_key);
+        if (!config?.channel_id || config.channel_id.trim() === '') {
+          console.error('YouTube channel ID is missing or empty');
+          setError('YouTube channel ID not configured. Please add your channel ID to continue.');
+          return;
+        }
+
+        const freshVideos = await fetchVideosFromYouTube(config.api_key, config.channel_id);
         setVideos(freshVideos);
 
-        const live = await fetchLiveStream(config.api_key);
+        const live = await fetchLiveStream(config.api_key, config.channel_id);
         setLiveStream(live);
       } else {
         setVideos(cachedVideos || []);
 
         const { data: config } = await supabase
           .from('youtube_config')
-          .select('api_key')
+          .select('api_key, channel_id')
           .single();
 
-        if (config?.api_key && config.api_key.trim() !== '') {
-          const live = await fetchLiveStream(config.api_key);
+        if (config?.api_key && config.api_key.trim() !== '' && config?.channel_id && config.channel_id.trim() !== '') {
+          const live = await fetchLiveStream(config.api_key, config.channel_id);
           setLiveStream(live);
         }
       }
