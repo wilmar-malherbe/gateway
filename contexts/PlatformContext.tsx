@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { VideoPlatform } from '@/types/platform';
 import { usePlatforms } from '@/hooks/usePlatforms';
+import { supabase } from '@/lib/supabase';
 
 interface PlatformContextType {
   selectedPlatform: VideoPlatform | null;
@@ -12,24 +12,51 @@ interface PlatformContextType {
 
 const PlatformContext = createContext<PlatformContextType | undefined>(undefined);
 
-const PLATFORM_STORAGE_KEY = '@selected_platform';
+let sessionId: string | null = null;
+
+const generateUUID = (): string => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
+
+const getSessionId = () => {
+  if (!sessionId) {
+    sessionId = generateUUID();
+  }
+  return sessionId;
+};
 
 export function PlatformProvider({ children }: { children: ReactNode }) {
   const { platforms, loading } = usePlatforms();
   const [selectedPlatform, setSelectedPlatformState] = useState<VideoPlatform | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    loadSelectedPlatform();
+    if (platforms.length > 0) {
+      loadSelectedPlatform();
+    }
   }, [platforms]);
 
   const loadSelectedPlatform = async () => {
     try {
-      const stored = await AsyncStorage.getItem(PLATFORM_STORAGE_KEY);
-      if (stored && platforms.length > 0) {
-        const parsed = JSON.parse(stored);
-        const platform = platforms.find(p => p.id === parsed.id);
+      const currentSessionId = getSessionId();
+
+      const { data, error } = await supabase
+        .from('user_preferences')
+        .select('selected_platform')
+        .eq('session_id', currentSessionId)
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error loading platform preference:', error);
+      } else if (data && data.selected_platform) {
+        const platform = platforms.find(p => p.id === data.selected_platform);
         if (platform) {
           setSelectedPlatformState(platform);
+          setIsLoaded(true);
           return;
         }
       }
@@ -38,21 +65,46 @@ export function PlatformProvider({ children }: { children: ReactNode }) {
         setSelectedPlatformState(platforms[0]);
       }
     } catch (error) {
-      console.error('Error loading selected platform:', error);
+      console.error('Failed to load platform preference:', error);
       if (platforms.length > 0) {
         setSelectedPlatformState(platforms[0]);
       }
+    } finally {
+      setIsLoaded(true);
     }
   };
 
   const setSelectedPlatform = async (platform: VideoPlatform) => {
     try {
-      setSelectedPlatformState(platform);
-      await AsyncStorage.setItem(PLATFORM_STORAGE_KEY, JSON.stringify(platform));
+      const currentSessionId = getSessionId();
+
+      const { error } = await supabase
+        .from('user_preferences')
+        .upsert(
+          {
+            session_id: currentSessionId,
+            selected_platform: platform.id,
+            updated_at: new Date().toISOString(),
+          },
+          {
+            onConflict: 'session_id',
+          }
+        );
+
+      if (error) {
+        console.error('Error saving platform preference:', error);
+      } else {
+        setSelectedPlatformState(platform);
+      }
     } catch (error) {
-      console.error('Error saving selected platform:', error);
+      console.error('Failed to save platform preference:', error);
+      setSelectedPlatformState(platform);
     }
   };
+
+  if (!isLoaded && platforms.length > 0) {
+    return null;
+  }
 
   return (
     <PlatformContext.Provider
