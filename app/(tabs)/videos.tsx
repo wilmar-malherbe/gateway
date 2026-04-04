@@ -56,6 +56,7 @@ export default function VideosScreen() {
       return (
         <View style={styles.emptyState}>
           <Text style={styles.emptyTitle}>{t.videos.error}</Text>
+          <Text style={styles.errorMessage}>{error}</Text>
           <TouchableOpacity style={styles.retryButton} onPress={refresh}>
             <RefreshCw size={18} color={COLORS.white} />
             <Text style={styles.retryButtonText}>{t.videos.retry}</Text>
@@ -140,6 +141,14 @@ const styles = StyleSheet.create({
     color: COLORS.lightText,
     textAlign: 'center',
     marginBottom: SPACING.lg,
+  },
+  errorMessage: {
+    fontSize: 14,
+    fontFamily: Fonts.regular,
+    color: COLORS.lightText,
+    textAlign: 'center',
+    marginBottom: SPACING.lg,
+    paddingHorizontal: SPACING.md,
   },
   retryButton: {
     flexDirection: 'row',

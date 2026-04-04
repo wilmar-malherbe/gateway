@@ -20,7 +20,13 @@ export function useYouTubeVideos() {
       );
 
       if (!response.ok) {
-        throw new Error('Failed to fetch video details');
+        const errorBody = await response.text();
+        console.error('Video details API error:', {
+          status: response.status,
+          statusText: response.statusText,
+          body: errorBody
+        });
+        throw new Error(`Failed to fetch video details: ${response.status} ${response.statusText}`);
       }
 
       const data = await response.json();
@@ -38,6 +44,12 @@ export function useYouTubeVideos() {
       );
 
       if (!response.ok) {
+        const errorBody = await response.text();
+        console.error('Live stream API error:', {
+          status: response.status,
+          statusText: response.statusText,
+          body: errorBody
+        });
         return null;
       }
 
@@ -85,12 +97,33 @@ export function useYouTubeVideos() {
 
   const fetchVideosFromYouTube = async (apiKey: string): Promise<YouTubeVideo[]> => {
     try {
+      const trimmedKey = apiKey.trim();
+      console.log('Fetching videos from YouTube API...');
+
       const response = await fetch(
-        `${YOUTUBE_API_BASE}/search?part=snippet&channelId=${CHANNEL_ID}&order=date&type=video&maxResults=50&key=${apiKey}`
+        `${YOUTUBE_API_BASE}/search?part=snippet&channelId=${CHANNEL_ID}&order=date&type=video&maxResults=50&key=${trimmedKey}`
       );
 
       if (!response.ok) {
-        throw new Error('Failed to fetch videos from YouTube');
+        const errorBody = await response.text();
+        let errorMessage = `YouTube API error: ${response.status} ${response.statusText}`;
+
+        try {
+          const errorJson = JSON.parse(errorBody);
+          if (errorJson.error?.message) {
+            errorMessage = errorJson.error.message;
+          }
+        } catch (e) {
+          console.error('Could not parse error response');
+        }
+
+        console.error('YouTube API error details:', {
+          status: response.status,
+          statusText: response.statusText,
+          body: errorBody
+        });
+
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
@@ -156,24 +189,31 @@ export function useYouTubeVideos() {
          new Date().getTime() - new Date(cachedVideos[0].updated_at).getTime() > CACHE_DURATION);
 
       if (shouldFetchFromAPI) {
-        const { data: config } = await supabase
+        const { data: config, error: configError } = await supabase
           .from('youtube_config')
           .select('api_key')
           .single();
 
-        if (config?.api_key) {
-          const freshVideos = await fetchVideosFromYouTube(config.api_key);
-          setVideos(freshVideos);
+        if (configError) {
+          console.error('Error fetching YouTube config:', configError);
+          throw new Error('Failed to load YouTube configuration');
+        }
 
-          const live = await fetchLiveStream(config.api_key);
-          setLiveStream(live);
-        } else {
+        if (!config?.api_key || config.api_key.trim() === '') {
+          console.error('YouTube API key is missing or empty');
           if (cachedVideos && cachedVideos.length > 0) {
             setVideos(cachedVideos);
           } else {
-            setError('YouTube API key not configured');
+            setError('YouTube API key not configured. Please add your API key to continue.');
           }
+          return;
         }
+
+        const freshVideos = await fetchVideosFromYouTube(config.api_key);
+        setVideos(freshVideos);
+
+        const live = await fetchLiveStream(config.api_key);
+        setLiveStream(live);
       } else {
         setVideos(cachedVideos || []);
 
@@ -182,14 +222,16 @@ export function useYouTubeVideos() {
           .select('api_key')
           .single();
 
-        if (config?.api_key) {
+        if (config?.api_key && config.api_key.trim() !== '') {
           const live = await fetchLiveStream(config.api_key);
           setLiveStream(live);
         }
       }
     } catch (err) {
       console.error('Error loading videos:', err);
-      setError('Failed to load videos');
+
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load videos';
+      setError(errorMessage);
 
       const { data: cachedVideos } = await supabase
         .from('youtube_videos')
