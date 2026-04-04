@@ -5,6 +5,7 @@ import { COLORS, Fonts, SPACING, BORDER_RADIUS, SHADOWS } from '@/constants/them
 import { YouTubeVideo } from '@/types/youtube';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { translate } from '@/translations';
+import { decodeHtmlEntities } from '@/utils/htmlDecode';
 
 interface VideoCardProps {
   video: YouTubeVideo;
@@ -78,7 +79,7 @@ export function VideoCard({ video, onPress }: VideoCardProps) {
 
       <View style={styles.content}>
         <Text style={styles.title} numberOfLines={2}>
-          {video.title}
+          {decodeHtmlEntities(video.title)}
         </Text>
 
         <View style={styles.metaContainer}>

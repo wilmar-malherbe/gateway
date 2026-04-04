@@ -13,6 +13,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, Fonts, SPACING } from '@/constants/theme';
 import { VideoCard } from '@/components/VideoCard';
 import { LiveStreamCard } from '@/components/LiveStreamCard';
+import { PlatformSelector } from '@/components/PlatformSelector';
 import { useYouTubeVideos } from '@/hooks/useYouTubeVideos';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { translate } from '@/translations';
@@ -73,6 +74,7 @@ export default function VideosScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
+      <PlatformSelector />
       {loading && !refreshing ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={COLORS.primary} />
