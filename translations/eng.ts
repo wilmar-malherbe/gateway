@@ -43,4 +43,19 @@ export const eng = {
     error: 'Unable to load articles',
     noArticles: 'No articles found',
   },
+
+  videos: {
+    title: 'Videos',
+    live: 'LIVE',
+    liveNow: 'Live Now',
+    viewers: 'viewers',
+    watchVideo: 'Watch Video',
+    loading: 'Loading videos...',
+    error: 'Unable to load videos',
+    noVideos: 'No videos found',
+    retry: 'Retry',
+    duration: 'Duration',
+    views: 'views',
+    published: 'Published',
+  },
 };

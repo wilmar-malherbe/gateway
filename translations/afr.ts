@@ -43,4 +43,19 @@ export const afr = {
     error: 'Kon nie artikels laai nie',
     noArticles: 'Geen artikels gevind nie',
   },
+
+  videos: {
+    title: "Video's",
+    live: 'REGSTREEKS',
+    liveNow: 'Regstreeks Nou',
+    viewers: 'kykers',
+    watchVideo: 'Kyk Video',
+    loading: "Laai video's...",
+    error: "Kon nie video's laai nie",
+    noVideos: "Geen video's gevind nie",
+    retry: 'Probeer Weer',
+    duration: 'Duur',
+    views: 'aansigte',
+    published: 'Gepubliseer',
+  },
 };
