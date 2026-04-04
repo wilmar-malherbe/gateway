@@ -4,6 +4,7 @@ import { Play, Eye, Calendar } from 'lucide-react-native';
 import { COLORS, Fonts, SPACING, BORDER_RADIUS, SHADOWS } from '@/constants/theme';
 import { YouTubeVideo } from '@/types/youtube';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { translate } from '@/translations';
 
 interface VideoCardProps {
   video: YouTubeVideo;
@@ -51,7 +52,8 @@ const formatDate = (dateString: string): string => {
 };
 
 export function VideoCard({ video, onPress }: VideoCardProps) {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const t = translate(language);
   const duration = formatDuration(video.duration);
   const views = formatViews(video.view_count);
   const publishedDate = formatDate(video.published_at);

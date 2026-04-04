@@ -4,6 +4,7 @@ import { Play, Eye } from 'lucide-react-native';
 import { COLORS, Fonts, SPACING, BORDER_RADIUS, SHADOWS } from '@/constants/theme';
 import { YouTubeVideo } from '@/types/youtube';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { translate } from '@/translations';
 
 interface LiveStreamCardProps {
   video: YouTubeVideo;
@@ -21,7 +22,8 @@ const formatViewers = (viewers: number): string => {
 };
 
 export function LiveStreamCard({ video, onPress }: LiveStreamCardProps) {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const t = translate(language);
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {

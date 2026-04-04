@@ -16,12 +16,14 @@ import { VideoCard } from '@/components/VideoCard';
 import { LiveStreamCard } from '@/components/LiveStreamCard';
 import { useYouTubeVideos } from '@/hooks/useYouTubeVideos';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { translate } from '@/translations';
 import { YouTubeVideo } from '@/types/youtube';
 import { RefreshCw } from 'lucide-react-native';
 
 export default function VideosScreen() {
   const { videos, liveStream, loading, error, refreshing, refresh } = useYouTubeVideos();
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const t = translate(language);
 
   const openVideo = (videoId: string) => {
     const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
