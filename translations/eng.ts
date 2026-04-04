@@ -35,4 +35,12 @@ export const eng = {
   placeholders: {
     userName: 'User',
   },
+
+  news: {
+    title: 'News & Articles',
+    allCategories: 'All',
+    loading: 'Loading articles...',
+    error: 'Unable to load articles',
+    noArticles: 'No articles found',
+  },
 };

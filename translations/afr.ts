@@ -35,4 +35,12 @@ export const afr = {
   placeholders: {
     userName: 'Persoon',
   },
+
+  news: {
+    title: 'Nuus & Artikels',
+    allCategories: 'Alles',
+    loading: 'Laai artikels...',
+    error: 'Kon nie artikels laai nie',
+    noArticles: 'Geen artikels gevind nie',
+  },
 };
