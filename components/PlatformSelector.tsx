@@ -53,7 +53,7 @@ export function PlatformSelector() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.background,
-    paddingTop: 0,
+    paddingTop: SPACING.md,
     paddingBottom: SPACING.md,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
