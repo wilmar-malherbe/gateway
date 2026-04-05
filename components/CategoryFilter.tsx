@@ -68,7 +68,8 @@ export function CategoryFilter({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: SPACING.lg,
+    marginTop: SPACING.sm,
+    marginBottom: SPACING.lg,
   },
   scrollContent: {
     paddingHorizontal: SPACING.lg,
