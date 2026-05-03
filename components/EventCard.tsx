@@ -2,75 +2,56 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Event } from '@/types/event';
 import { COLORS, Fonts, SPACING, BORDER_RADIUS, SHADOWS } from '@/constants/theme';
-import { Clock, MapPin, User } from 'lucide-react-native';
+import { Clock, MapPin } from 'lucide-react-native';
 
 interface EventCardProps {
   event: Event;
 }
 
 export function EventCard({ event }: EventCardProps) {
-  const formatTime = (time: string) => {
-    const [hours, minutes] = time.split(':');
-    const hour = parseInt(hours, 10);
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const displayHour = hour % 12 || 12;
+  const formatTimestamp = (timestamp: string) => {
+    const date = new Date(timestamp);
+    const hours = date.getHours();
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHour = hours % 12 || 12;
     return `${displayHour}:${minutes} ${ampm}`;
   };
 
-  const getCategoryColor = (category: string | null) => {
-    switch (category?.toLowerCase()) {
-      case 'service':
-        return COLORS.primary;
-      case 'meeting':
-        return COLORS.secondary;
-      case 'special':
-        return COLORS.warning;
-      default:
-        return COLORS.success;
+  const getTimeDisplay = () => {
+    if (event.is_all_day) return 'All Day';
+    if (event.start_at && event.end_at) {
+      return `${formatTimestamp(event.start_at)} - ${formatTimestamp(event.end_at)}`;
     }
+    if (event.start_at) return formatTimestamp(event.start_at);
+    return null;
   };
+
+  const timeDisplay = getTimeDisplay();
 
   return (
     <View style={styles.card}>
-      {event.category && (
-        <View
-          style={[
-            styles.categoryBadge,
-            { backgroundColor: getCategoryColor(event.category) },
-          ]}
-        >
-          <Text style={styles.categoryText}>{event.category}</Text>
+      <Text style={styles.eventName}>{event.summary}</Text>
+
+      {timeDisplay && (
+        <View style={styles.detailRow}>
+          <Clock size={16} color={COLORS.lightText} />
+          <Text style={styles.detailText}>{timeDisplay}</Text>
         </View>
       )}
 
-      <Text style={styles.eventName}>{event.event_name}</Text>
-
-      <View style={styles.detailRow}>
-        <Clock size={16} color={COLORS.lightText} />
-        <Text style={styles.detailText}>
-          {formatTime(event.start_time)} - {formatTime(event.end_time)}
-        </Text>
-      </View>
-
-      {event.location && (
+      {event.location ? (
         <View style={styles.detailRow}>
           <MapPin size={16} color={COLORS.lightText} />
           <Text style={styles.detailText}>{event.location}</Text>
         </View>
-      )}
+      ) : null}
 
-      {event.organizer && (
-        <View style={styles.detailRow}>
-          <User size={16} color={COLORS.lightText} />
-          <Text style={styles.detailText}>{event.organizer}</Text>
-        </View>
-      )}
-
-      {event.description && (
+      {event.description ? (
         <Text style={styles.description} numberOfLines={3}>
           {event.description}
         </Text>
-      )}
+      ) : null}
     </View>
   );
 }
@@ -82,19 +63,6 @@ const styles = StyleSheet.create({
     padding: SPACING.lg,
     marginBottom: SPACING.md,
     ...SHADOWS.small,
-  },
-  categoryBadge: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.xs,
-    borderRadius: BORDER_RADIUS.sm,
-    marginBottom: SPACING.sm,
-  },
-  categoryText: {
-    color: COLORS.white,
-    fontSize: 12,
-    fontFamily: Fonts.semibold,
-    textTransform: 'capitalize',
   },
   eventName: {
     fontSize: 18,

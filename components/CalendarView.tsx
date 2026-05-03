@@ -53,7 +53,18 @@ export function CalendarView({ events, selectedDate, onDateSelect }: CalendarVie
   const hasEvents = (date: Date | null) => {
     if (!date) return false;
     const dateString = formatDateString(date);
-    return events.some(event => event.event_date === dateString);
+    return events.some(event => {
+      if (event.is_all_day && event.start_date && event.end_date) {
+        return dateString >= event.start_date && dateString < event.end_date;
+      }
+      if (event.is_all_day && event.start_date) {
+        return dateString === event.start_date;
+      }
+      if (event.start_at) {
+        return event.start_at.split('T')[0] === dateString;
+      }
+      return false;
+    });
   };
 
   const isToday = (date: Date | null) => {
@@ -218,7 +229,6 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: SPACING.xs,
     position: 'relative',
   },
   emptyDayCell: {
@@ -236,6 +246,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: Fonts.regular,
     color: COLORS.text,
+    textAlign: 'center',
   },
   todayText: {
     fontFamily: Fonts.bold,

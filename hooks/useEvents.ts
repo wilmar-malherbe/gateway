@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Event } from '@/types/event';
 
-export function useEvents(dateFilter?: { startDate?: string; endDate?: string }) {
+export function useEvents() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -10,25 +10,31 @@ export function useEvents(dateFilter?: { startDate?: string; endDate?: string })
   useEffect(() => {
     fetchEvents();
 
-    // Set up real-time subscription
     const subscription = supabase
-      .channel('events_changes')
+      .channel('dash_calendar_events_changes')
       .on(
         'postgres_changes',
         {
           event: '*',
           schema: 'public',
-          table: 'events',
+          table: 'dash_calendar_events',
         },
         (payload) => {
           if (payload.eventType === 'INSERT') {
-            setEvents((prev) => [...prev, payload.new as Event].sort(sortByDateTime));
+            const newEvent = payload.new as Event;
+            if (newEvent.status === 'confirmed' && !payload.new.deleted_at) {
+              setEvents((prev) => [...prev, newEvent].sort(sortEvents));
+            }
           } else if (payload.eventType === 'UPDATE') {
-            setEvents((prev) =>
-              prev.map((event) =>
-                event.id === payload.new.id ? (payload.new as Event) : event
-              ).sort(sortByDateTime)
-            );
+            if (payload.new.deleted_at || payload.new.status === 'cancelled') {
+              setEvents((prev) => prev.filter((event) => event.id !== payload.new.id));
+            } else {
+              setEvents((prev) =>
+                prev.map((event) =>
+                  event.id === payload.new.id ? (payload.new as Event) : event
+                ).sort(sortEvents)
+              );
+            }
           } else if (payload.eventType === 'DELETE') {
             setEvents((prev) => prev.filter((event) => event.id !== payload.old.id));
           }
@@ -39,12 +45,16 @@ export function useEvents(dateFilter?: { startDate?: string; endDate?: string })
     return () => {
       subscription.unsubscribe();
     };
-  }, [dateFilter?.startDate, dateFilter?.endDate]);
+  }, []);
 
-  const sortByDateTime = (a: Event, b: Event) => {
-    const dateComparison = a.event_date.localeCompare(b.event_date);
-    if (dateComparison !== 0) return dateComparison;
-    return a.start_time.localeCompare(b.start_time);
+  const getEventSortDate = (event: Event): string => {
+    if (event.start_at) return event.start_at;
+    if (event.start_date) return event.start_date;
+    return '';
+  };
+
+  const sortEvents = (a: Event, b: Event) => {
+    return getEventSortDate(a).localeCompare(getEventSortDate(b));
   };
 
   const fetchEvents = async () => {
@@ -52,26 +62,17 @@ export function useEvents(dateFilter?: { startDate?: string; endDate?: string })
       setLoading(true);
       setError(null);
 
-      let query = supabase
-        .from('events')
-        .select('*')
-        .order('event_date', { ascending: true })
-        .order('start_time', { ascending: true });
-
-      if (dateFilter?.startDate) {
-        query = query.gte('event_date', dateFilter.startDate);
-      }
-      if (dateFilter?.endDate) {
-        query = query.lte('event_date', dateFilter.endDate);
-      }
-
-      const { data, error: err } = await query;
+      const { data, error: err } = await supabase
+        .from('dash_calendar_events')
+        .select('id, summary, description, location, start_at, end_at, start_date, end_date, is_all_day, status, event_type, created_at')
+        .eq('status', 'confirmed')
+        .is('deleted_at', null)
+        .order('start_at', { ascending: true, nullsFirst: false });
 
       if (err) throw err;
       setEvents(data || []);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to fetch events');
-      console.error('Error fetching events:', err);
     } finally {
       setLoading(false);
     }
@@ -81,8 +82,20 @@ export function useEvents(dateFilter?: { startDate?: string; endDate?: string })
     await fetchEvents();
   };
 
-  const getEventsForDate = (date: string) => {
-    return events.filter((event) => event.event_date === date);
+  const getEventsForDate = (dateString: string) => {
+    return events.filter((event) => {
+      if (event.is_all_day && event.start_date && event.end_date) {
+        return dateString >= event.start_date && dateString < event.end_date;
+      }
+      if (event.is_all_day && event.start_date) {
+        return dateString === event.start_date;
+      }
+      if (event.start_at) {
+        const eventDate = event.start_at.split('T')[0];
+        return eventDate === dateString;
+      }
+      return false;
+    });
   };
 
   return { events, loading, error, refetch, getEventsForDate };

@@ -1,13 +1,14 @@
 export interface Event {
-  id: string;
-  event_name: string;
+  id: number;
+  summary: string;
   description: string | null;
-  event_date: string;
-  start_time: string;
-  end_time: string;
-  organizer: string | null;
   location: string | null;
-  category: string | null;
+  start_at: string | null;
+  end_at: string | null;
+  start_date: string | null;
+  end_date: string | null;
+  is_all_day: boolean;
+  status: string;
+  event_type: string | null;
   created_at: string;
-  updated_at: string;
 }

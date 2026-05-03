@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, RefreshControl, ActivityIndicator } from 'react-native';
+
 import { COLORS, Fonts, SPACING } from '@/constants/theme';
 import { useEvents } from '@/hooks/useEvents';
 import { CalendarView } from '@/components/CalendarView';
@@ -19,7 +20,18 @@ export default function CalendarScreen() {
 
   const selectedDateEvents = useMemo(() => {
     const dateString = formatDateString(selectedDate);
-    return events.filter(event => event.event_date === dateString);
+    return events.filter(event => {
+      if (event.is_all_day && event.start_date && event.end_date) {
+        return dateString >= event.start_date && dateString < event.end_date;
+      }
+      if (event.is_all_day && event.start_date) {
+        return dateString === event.start_date;
+      }
+      if (event.start_at) {
+        return event.start_at.split('T')[0] === dateString;
+      }
+      return false;
+    });
   }, [events, selectedDate]);
 
   const onRefresh = async () => {
@@ -64,8 +76,6 @@ export default function CalendarScreen() {
           />
         }
       >
-        <Text style={styles.title}>Church Calendar</Text>
-
         <CalendarView
           events={events}
           selectedDate={selectedDate}
@@ -91,12 +101,6 @@ const styles = StyleSheet.create({
   content: {
     padding: SPACING.lg,
     paddingBottom: SPACING.xxl,
-  },
-  title: {
-    fontSize: 28,
-    fontFamily: Fonts.bold,
-    color: COLORS.text,
-    marginBottom: SPACING.lg,
   },
   eventsSection: {
     marginTop: SPACING.xl,
