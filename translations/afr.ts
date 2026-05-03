@@ -15,7 +15,7 @@ export const afr = {
     seasonWinter: 'Eredienstye - Winter',
     connectWithUs: 'Kontak Ons',
     connectWithUsSubtitle: 'Kom in aanraking met ons gemeenskap',
-    officeInformation: 'Kantoormformasie',
+    officeInformation: 'Kantoorinformasie',
     donate: 'Skenk',
     contact: 'Kontak',
   },
