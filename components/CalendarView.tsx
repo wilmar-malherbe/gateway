@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
   },
   dayCell: {
     width: `${100 / 7}%`,
-    aspectRatio: 1,
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
@@ -247,6 +247,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
     color: COLORS.text,
     textAlign: 'center',
+    width: '100%',
   },
   todayText: {
     fontFamily: Fonts.bold,
