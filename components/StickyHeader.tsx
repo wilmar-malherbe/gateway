@@ -13,23 +13,22 @@ export function StickyHeader() {
     <View style={styles.container}>
       <View style={styles.leftSection}>
         <Image
-          source={require('@/assets/images/headerImage copy.jpg')}
+          source={require('@/assets/images/Helderberg_Gemeente_Logo_Blou.png')}
           style={styles.logo}
           resizeMode="contain"
         />
       </View>
 
-      <View style={styles.centerSection}>
+      <View style={styles.rightSection}>
         <LanguageSelector />
+        <TouchableOpacity
+          style={styles.profileButton}
+          onPress={handleProfilePress}
+          activeOpacity={0.7}
+        >
+          <MaterialCommunityIcons name="account" size={24} color={COLORS.primary} />
+        </TouchableOpacity>
       </View>
-
-      <TouchableOpacity
-        style={styles.profileButton}
-        onPress={handleProfilePress}
-        activeOpacity={0.7}
-      >
-        <MaterialCommunityIcons name="account" size={24} color={COLORS.primary} />
-      </TouchableOpacity>
     </View>
   );
 }
@@ -48,13 +47,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logo: {
-    width: 60,
-    height: 60,
+    width: 160,
+    height: 48,
   },
-  centerSection: {
-    flex: 0.5,
-    alignItems: 'flex-end',
-    paddingRight: SPACING.sm,
+  rightSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.sm,
   },
   profileButton: {
     width: 44,

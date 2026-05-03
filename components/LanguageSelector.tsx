@@ -30,17 +30,17 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: SPACING.md,
-    paddingVertical: SPACING.sm,
+    paddingHorizontal: SPACING.sm,
+    paddingVertical: 6,
     backgroundColor: '#f0f7fc',
-    borderRadius: 20,
-    gap: SPACING.xs,
+    borderRadius: 16,
+    gap: 4,
   },
   flag: {
-    fontSize: 20,
+    fontSize: 14,
   },
   languageText: {
-    fontSize: 14,
+    fontSize: 11,
     fontFamily: Fonts.semibold,
     color: COLORS.primary,
   },
