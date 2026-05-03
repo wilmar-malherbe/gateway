@@ -4,7 +4,7 @@ export const CHURCH_INFO = {
   phone: '+27 (21) 851 5582',
   email: 'ontvangs@nghelder.co.za',
   officeHours: 'Monday - Friday: 9:00 AM - 5:00 PM',
-  donationLink: 'https://ccriverside.org/give',
+  donationLink: 'https://shop.nghelder.co.za/home/donate',
   youtubeChannel: 'https://www.youtube.com/@CalvaryChapelInland',
 };
 
