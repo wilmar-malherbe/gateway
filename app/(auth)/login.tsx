@@ -131,7 +131,7 @@ export default function LoginScreen() {
         </TouchableOpacity>
 
         <View style={styles.footerRow}>
-          <Text style={styles.footerText}>{t.auth.noAccount} </Text>
+          <Text style={styles.footerText}>{t.auth.noAccount}</Text>
           <TouchableOpacity onPress={() => router.push('/(auth)/signup')} disabled={submitting}>
             <Text style={styles.footerLink}>{t.auth.signUp}</Text>
           </TouchableOpacity>
@@ -207,6 +207,7 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontFamily: Fonts.regular,
     fontSize: 14,
+    letterSpacing: 0.2,
   },
   button: {
     backgroundColor: COLORS.primary,
@@ -223,10 +224,10 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontFamily: Fonts.semibold,
     fontSize: 16,
+    letterSpacing: 0.3,
   },
   footerRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: SPACING.xl,
   },
   footerText: {
@@ -238,5 +239,6 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontFamily: Fonts.semibold,
     fontSize: 14,
+    marginTop: SPACING.xs,
   },
 });
