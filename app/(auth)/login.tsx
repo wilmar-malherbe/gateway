@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontFamily: Fonts.regular,
     fontSize: 14,
-    paddingRight: 4,
+    letterSpacing: 0.3,
   },
   button: {
     backgroundColor: COLORS.primary,
@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontFamily: Fonts.semibold,
     fontSize: 16,
-    paddingRight: 4,
+    letterSpacing: 0.3,
   },
   footerRow: {
     alignItems: 'center',
@@ -247,6 +247,6 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.semibold,
     fontSize: 14,
     marginTop: SPACING.xs,
-    paddingRight: 4,
+    letterSpacing: 0.3,
   },
 });

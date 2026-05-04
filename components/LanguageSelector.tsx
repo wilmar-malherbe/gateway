@@ -30,8 +30,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: SPACING.md,
-    paddingRight: SPACING.md + 4,
+    paddingHorizontal: SPACING.md,
     paddingVertical: 6,
     backgroundColor: '#f0f7fc',
     borderRadius: 16,
@@ -45,6 +44,6 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontFamily: Fonts.semibold,
     color: COLORS.primary,
-    paddingRight: 2,
+    letterSpacing: 0.5,
   },
 });
