@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   textPill: {
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 25,

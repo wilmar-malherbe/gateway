@@ -136,7 +136,7 @@ export function CalendarView({ events, selectedDate, onDateSelect }: CalendarVie
       <View style={styles.daysOfWeekContainer}>
         {daysOfWeek.map((day) => (
           <View key={day} style={styles.dayOfWeekCell}>
-            <Text style={styles.dayOfWeekText}>{day}</Text>
+            <Text style={styles.dayOfWeekText} numberOfLines={1} adjustsFontSizeToFit>{day}</Text>
           </View>
         ))}
       </View>
