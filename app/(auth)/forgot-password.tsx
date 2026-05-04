@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.xl,
     alignItems: 'center',
     justifyContent: 'center',
-    height: 52,
+    minHeight: 52,
     overflow: 'visible' as const,
   },
   buttonDisabled: {
