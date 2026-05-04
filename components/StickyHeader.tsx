@@ -1,12 +1,15 @@
 import React from 'react';
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { LanguageSelector } from './LanguageSelector';
 import { COLORS, SPACING, SHADOWS } from '@/constants/theme';
 
 export function StickyHeader() {
+  const router = useRouter();
+
   const handleProfilePress = () => {
-    console.log('Profile pressed');
+    router.push('/profile');
   };
 
   return (

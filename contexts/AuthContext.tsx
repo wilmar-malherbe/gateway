@@ -106,14 +106,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const { error } = await supabase
       .from('profiles')
-      .update(data)
-      .eq('id', user.id);
+      .upsert({ id: user.id, ...data }, { onConflict: 'id' });
 
     if (error) {
       return { error: error.message };
     }
 
-    setProfile((prev) => prev ? { ...prev, ...data } : null);
+    setProfile((prev) => prev
+      ? { ...prev, ...data }
+      : { id: user.id, first_name: data.first_name ?? '', last_name: data.last_name ?? '', created_at: new Date().toISOString(), updated_at: new Date().toISOString() }
+    );
     return { error: null };
   }, [user]);
 
