@@ -45,9 +45,43 @@ function NavigationGuard() {
   return null;
 }
 
+function AppContent({ fontsLoaded, fontError }: { fontsLoaded: boolean; fontError: Error | null }) {
+  const colorScheme = useColorScheme();
+  const { initialized } = useAuth();
+
+  const isReady = (fontsLoaded || !!fontError) && initialized;
+
+  useEffect(() => {
+    if (isReady) {
+      SplashScreen.hideAsync();
+    }
+  }, [isReady]);
+
+  if (!isReady) {
+    return null;
+  }
+
+  return (
+    <LanguageProvider>
+      <PlatformProvider>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <NavigationGuard />
+          <Stack>
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="profile" options={{ headerShown: false }} />
+            <Stack.Screen name="article-detail" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </PlatformProvider>
+    </LanguageProvider>
+  );
+}
+
 export default function RootLayout() {
   useFrameworkReady();
-  const colorScheme = useColorScheme();
 
   const [fontsLoaded, fontError] = useFonts({
     'Montserrat_100Thin': Montserrat_100Thin,
@@ -57,33 +91,9 @@ export default function RootLayout() {
     'Montserrat_700Bold': Montserrat_700Bold,
   });
 
-  useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
-
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
-
   return (
     <AuthProvider>
-      <LanguageProvider>
-        <PlatformProvider>
-          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <NavigationGuard />
-            <Stack>
-              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="profile" options={{ headerShown: false }} />
-              <Stack.Screen name="article-detail" options={{ headerShown: false }} />
-              <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-            </Stack>
-            <StatusBar style="auto" />
-          </ThemeProvider>
-        </PlatformProvider>
-      </LanguageProvider>
+      <AppContent fontsLoaded={fontsLoaded} fontError={fontError} />
     </AuthProvider>
   );
 }
