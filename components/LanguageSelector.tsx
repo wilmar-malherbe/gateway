@@ -30,11 +30,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: SPACING.sm,
+    paddingHorizontal: SPACING.md,
     paddingVertical: 6,
     backgroundColor: '#f0f7fc',
     borderRadius: 16,
     gap: 4,
+    minWidth: 60,
   },
   flag: {
     fontSize: 14,

@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: SPACING.sm,
+    flexShrink: 0,
   },
   profileButton: {
     width: 44,
