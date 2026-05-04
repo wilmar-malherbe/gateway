@@ -15,7 +15,7 @@ export function SeasonHeader({ isSummer }: SeasonHeaderProps) {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('@/assets/images/Untitled_design.png')}
+        source={require('@/assets/images/2025_Basaar-70.jpg')}
         style={styles.imageBackground}
         imageStyle={styles.imageStyle}
         resizeMode="cover"

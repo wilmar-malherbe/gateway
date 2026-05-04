@@ -22,6 +22,8 @@ export const afr = {
 
   contact: {
     callUs: 'Bel Ons',
+    officeNumber: 'Kantoornommer',
+    emergencyNumber: 'Noodnommer',
     email: 'E-pos',
     officeHours: 'Kantoorure',
     address: 'Adres',

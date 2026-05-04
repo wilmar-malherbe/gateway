@@ -22,6 +22,8 @@ export const eng = {
 
   contact: {
     callUs: 'Call Us',
+    officeNumber: 'Office Number',
+    emergencyNumber: 'Emergency Number',
     email: 'Email',
     officeHours: 'Office Hours',
     address: 'Address',

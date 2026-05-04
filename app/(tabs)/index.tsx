@@ -52,6 +52,12 @@ export default function HomeScreen() {
     }
   };
 
+  const handleEmergencyCall = () => {
+    Linking.openURL('tel:+27839882003').catch(() => {
+      Alert.alert('Error', 'Unable to make call');
+    });
+  };
+
   const handleEmail = () => {
     if (contactInfo?.email) {
       Linking.openURL(`mailto:${contactInfo.email}`).catch(() => {
@@ -112,10 +118,18 @@ export default function HomeScreen() {
 
               <InfoCard
                 icon="phone"
-                title={t.contact.callUs}
+                title={t.contact.officeNumber}
                 content={contactInfo.phone_number}
                 isClickable
                 onPress={handleCall}
+              />
+
+              <InfoCard
+                icon="phone-alert"
+                title={t.contact.emergencyNumber}
+                content="+27 (83) 988 2003"
+                isClickable
+                onPress={handleEmergencyCall}
               />
 
               {contactInfo.email && (
