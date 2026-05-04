@@ -70,7 +70,14 @@ export default function ProfileScreen() {
       t.auth.signOutConfirm,
       [
         { text: t.auth.cancel, style: 'cancel' },
-        { text: t.auth.signOut, style: 'destructive', onPress: signOut },
+        {
+          text: t.auth.signOut,
+          style: 'destructive',
+          onPress: async () => {
+            await signOut();
+            router.replace('/(auth)/login');
+          },
+        },
       ]
     );
   };

@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    paddingHorizontal: SPACING.xl,
+    paddingHorizontal: SPACING.xxl,
     paddingVertical: SPACING.xxl,
   },
   logoContainer: {
@@ -217,6 +217,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primary,
     borderRadius: BORDER_RADIUS.sm,
     paddingVertical: SPACING.lg,
+    paddingHorizontal: SPACING.xl,
     alignItems: 'center',
     justifyContent: 'center',
     height: 52,

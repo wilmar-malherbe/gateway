@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     flexGrow: 1,
     justifyContent: 'center',
-    paddingHorizontal: SPACING.xl,
+    paddingHorizontal: SPACING.xxl,
     paddingVertical: SPACING.xxl,
   },
   logoContainer: {
@@ -202,17 +202,18 @@ const styles = StyleSheet.create({
   forgotLink: {
     alignSelf: 'flex-end',
     marginBottom: SPACING.xl,
+    paddingRight: SPACING.xs,
   },
   forgotLinkText: {
     color: COLORS.primary,
     fontFamily: Fonts.regular,
     fontSize: 14,
-    letterSpacing: 0.2,
   },
   button: {
     backgroundColor: COLORS.primary,
     borderRadius: BORDER_RADIUS.sm,
     paddingVertical: SPACING.lg,
+    paddingHorizontal: SPACING.xl,
     alignItems: 'center',
     justifyContent: 'center',
     height: 52,
@@ -224,11 +225,11 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontFamily: Fonts.semibold,
     fontSize: 16,
-    letterSpacing: 0.3,
   },
   footerRow: {
     alignItems: 'center',
     marginTop: SPACING.xl,
+    paddingHorizontal: SPACING.sm,
   },
   footerText: {
     color: COLORS.lightText,
