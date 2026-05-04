@@ -43,6 +43,18 @@ export function CalendarView({ events, selectedDate, onDateSelect }: CalendarVie
 
   const days = useMemo(() => getDaysInMonth(currentMonth), [currentMonth]);
 
+  const weeks = useMemo(() => {
+    const rows: (Date | null)[][] = [];
+    for (let i = 0; i < days.length; i += 7) {
+      const row = days.slice(i, i + 7);
+      while (row.length < 7) {
+        row.push(null);
+      }
+      rows.push(row);
+    }
+    return rows;
+  }, [days]);
+
   const formatDateString = (date: Date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -130,40 +142,44 @@ export function CalendarView({ events, selectedDate, onDateSelect }: CalendarVie
       </View>
 
       <View style={styles.daysContainer}>
-        {days.map((day, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[
-              styles.dayCell,
-              day === null && styles.emptyDayCell,
-              isToday(day) && styles.todayCell,
-              isSelected(day) && styles.selectedDayCell,
-            ]}
-            onPress={() => day && onDateSelect(day)}
-            disabled={day === null}
-          >
-            {day && (
-              <>
-                <Text
-                  style={[
-                    styles.dayText,
-                    isToday(day) && styles.todayText,
-                    isSelected(day) && styles.selectedDayText,
-                  ]}
-                >
-                  {day.getDate()}
-                </Text>
-                {hasEvents(day) && (
-                  <View
-                    style={[
-                      styles.eventDot,
-                      isSelected(day) && styles.eventDotSelected,
-                    ]}
-                  />
+        {weeks.map((week, weekIndex) => (
+          <View key={weekIndex} style={styles.weekRow}>
+            {week.map((day, dayIndex) => (
+              <TouchableOpacity
+                key={dayIndex}
+                style={[
+                  styles.dayCell,
+                  day === null && styles.emptyDayCell,
+                  isToday(day) && styles.todayCell,
+                  isSelected(day) && styles.selectedDayCell,
+                ]}
+                onPress={() => day && onDateSelect(day)}
+                disabled={day === null}
+              >
+                {day && (
+                  <>
+                    <Text
+                      style={[
+                        styles.dayText,
+                        isToday(day) && styles.todayText,
+                        isSelected(day) && styles.selectedDayText,
+                      ]}
+                    >
+                      {day.getDate()}
+                    </Text>
+                    {hasEvents(day) && (
+                      <View
+                        style={[
+                          styles.eventDot,
+                          isSelected(day) && styles.eventDotSelected,
+                        ]}
+                      />
+                    )}
+                  </>
                 )}
-              </>
-            )}
-          </TouchableOpacity>
+              </TouchableOpacity>
+            ))}
+          </View>
         ))}
       </View>
     </View>
@@ -221,11 +237,12 @@ const styles = StyleSheet.create({
     color: COLORS.lightText,
   },
   daysContainer: {
+  },
+  weekRow: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
   },
   dayCell: {
-    width: `${100 / 7}%`,
+    flex: 1,
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',
@@ -247,7 +264,6 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
     color: COLORS.text,
     textAlign: 'center',
-    width: '100%',
   },
   todayText: {
     fontFamily: Fonts.bold,

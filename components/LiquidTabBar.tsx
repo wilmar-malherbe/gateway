@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Pressable, Platform, Dimensions } from 'react-native';
+import { View, StyleSheet, Pressable, Dimensions } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
   useAnimatedStyle,
   withSpring,
@@ -42,6 +43,7 @@ function TabIcon({ isFocused, icon }: TabIconProps) {
 }
 
 export function LiquidTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+  const insets = useSafeAreaInsets();
   const screenWidth = Dimensions.get('window').width;
   const tabWidth = screenWidth / state.routes.length;
   const translateX = useSharedValue(state.index * tabWidth);
@@ -54,8 +56,10 @@ export function LiquidTabBar({ state, descriptors, navigation }: BottomTabBarPro
     transform: [{ translateX: translateX.value }],
   }));
 
+  const bottomPadding = Math.max(insets.bottom, 16);
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingBottom: bottomPadding }]}>
       <View style={styles.tabBarContainer}>
         <Animated.View
           style={[
@@ -103,11 +107,6 @@ export function LiquidTabBar({ state, descriptors, navigation }: BottomTabBarPro
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.white,
-    paddingBottom: Platform.select({
-      ios: 20,
-      android: 16,
-      default: 16,
-    }),
     paddingTop: 4,
   },
   tabBarContainer: {
