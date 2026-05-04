@@ -50,7 +50,8 @@
             "./assets/fonts/Montserrat-Bold.ttf"
           ]
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true

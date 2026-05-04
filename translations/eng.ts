@@ -38,6 +38,38 @@ export const eng = {
     userName: 'User',
   },
 
+  auth: {
+    signIn: 'Sign In',
+    signUp: 'Create Account',
+    signOut: 'Sign Out',
+    forgotPassword: 'Forgot Password?',
+    resetPassword: 'Reset Password',
+    sendResetLink: 'Send Reset Link',
+    email: 'Email',
+    password: 'Password',
+    confirmPassword: 'Confirm Password',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    noAccount: "Don't have an account?",
+    haveAccount: 'Already have an account?',
+    backToLogin: 'Back to Sign In',
+    resetSuccess: 'Check your email for a password reset link.',
+    welcomeBack: 'Welcome back',
+    createYourAccount: 'Create your account',
+    enterEmailToReset: 'Enter your email to receive a reset link.',
+    signOutConfirm: 'Are you sure you want to sign out?',
+    cancel: 'Cancel',
+  },
+
+  profile: {
+    title: 'My Profile',
+    editProfile: 'Edit Profile',
+    save: 'Save',
+    saving: 'Saving...',
+    profileUpdated: 'Profile updated successfully.',
+    myAccount: 'My Account',
+  },
+
   news: {
     title: 'News & Articles',
     allCategories: 'All',

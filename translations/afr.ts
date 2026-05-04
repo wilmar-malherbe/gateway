@@ -38,6 +38,38 @@ export const afr = {
     userName: 'Persoon',
   },
 
+  auth: {
+    signIn: 'Meld Aan',
+    signUp: 'Skep Rekening',
+    signOut: 'Meld Af',
+    forgotPassword: 'Wagwoord Vergeet?',
+    resetPassword: 'Herstel Wagwoord',
+    sendResetLink: 'Stuur Herstelskakel',
+    email: 'E-pos',
+    password: 'Wagwoord',
+    confirmPassword: 'Bevestig Wagwoord',
+    firstName: 'Voornaam',
+    lastName: 'Van',
+    noAccount: 'Het jy nie n rekening nie?',
+    haveAccount: 'Het jy reeds n rekening?',
+    backToLogin: 'Terug na Aanmelding',
+    resetSuccess: 'Kyk jou e-pos vir n wagwoordherstelskakel.',
+    welcomeBack: 'Welkom terug',
+    createYourAccount: 'Skep jou rekening',
+    enterEmailToReset: 'Voer jou e-pos in om n herstelskakel te ontvang.',
+    signOutConfirm: 'Is jy seker jy wil afmeld?',
+    cancel: 'Kanselleer',
+  },
+
+  profile: {
+    title: 'My Profiel',
+    editProfile: 'Wysig Profiel',
+    save: 'Stoor',
+    saving: 'Stoor...',
+    profileUpdated: 'Profiel suksesvol opgedateer.',
+    myAccount: 'My Rekening',
+  },
+
   news: {
     title: 'Nuus & Artikels',
     allCategories: 'Alles',

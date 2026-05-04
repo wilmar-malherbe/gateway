@@ -1,6 +1,6 @@
 import * as SplashScreen from 'expo-splash-screen';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
+import { Stack, useSegments, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import { useEffect } from 'react';
@@ -13,16 +13,37 @@ import {
   Montserrat_700Bold,
 } from '@expo-google-fonts/montserrat';
 
-import { useColorScheme } from '@/hooks/use-color-scheme'
+import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { PlatformProvider } from '@/contexts/PlatformContext';
+import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 
 SplashScreen.preventAutoHideAsync();
 
 export const unstable_settings = {
   anchor: '(tabs)',
 };
+
+function NavigationGuard() {
+  const { session, initialized } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!initialized) return;
+
+    const inAuthGroup = segments[0] === '(auth)';
+
+    if (!session && !inAuthGroup) {
+      router.replace('/(auth)/login');
+    } else if (session && inAuthGroup) {
+      router.replace('/(tabs)');
+    }
+  }, [session, initialized, segments]);
+
+  return null;
+}
 
 export default function RootLayout() {
   useFrameworkReady();
@@ -47,17 +68,22 @@ export default function RootLayout() {
   }
 
   return (
-    <LanguageProvider>
-      <PlatformProvider>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="article-detail" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-          </Stack>
-          <StatusBar style="auto" />
-        </ThemeProvider>
-      </PlatformProvider>
-    </LanguageProvider>
+    <AuthProvider>
+      <LanguageProvider>
+        <PlatformProvider>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <NavigationGuard />
+            <Stack>
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="profile" options={{ headerShown: false }} />
+              <Stack.Screen name="article-detail" options={{ headerShown: false }} />
+              <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+            </Stack>
+            <StatusBar style="auto" />
+          </ThemeProvider>
+        </PlatformProvider>
+      </LanguageProvider>
+    </AuthProvider>
   );
 }

@@ -2,14 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { useInspirationMessage } from '@/hooks/useInspirationMessage';
 import { translate } from '@/translations';
 import { COLORS, Fonts, SPACING } from '@/constants/theme';
 
 export function WelcomeSection() {
   const { language } = useLanguage();
+  const { profile } = useAuth();
   const { message, loading } = useInspirationMessage(language);
   const t = translate(language);
+
+  const displayName = profile?.first_name || t.placeholders.userName;
 
   const [displayMessage, setDisplayMessage] = useState(message);
 
@@ -22,7 +26,7 @@ export function WelcomeSection() {
   return (
     <View style={styles.container}>
       <Text style={styles.welcomeText}>
-        {t.welcome} {t.placeholders.userName}
+        {t.welcome}, {displayName}
       </Text>
       {!loading && displayMessage && (
         <Animated.View entering={FadeIn.duration(600)}>
