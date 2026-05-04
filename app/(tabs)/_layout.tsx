@@ -26,6 +26,7 @@ export default function TabLayout() {
         <StickyHeader />
       </View>
       <Tabs
+        initialRouteName="index"
         tabBar={(props) => <LiquidTabBar {...props} />}
         screenOptions={{
           headerShown: false,

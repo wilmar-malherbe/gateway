@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
-import { User, ChevronRight, Globe } from 'lucide-react-native';
+import { User, ChevronRight } from 'lucide-react-native';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { translate } from '@/translations';
@@ -9,7 +9,7 @@ import { COLORS, Fonts, SPACING, BORDER_RADIUS, SHADOWS } from '@/constants/them
 
 export default function MenuScreen() {
   const { profile } = useAuth();
-  const { language, toggleLanguage } = useLanguage();
+  const { language } = useLanguage();
   const t = translate(language);
   const router = useRouter();
 
@@ -29,7 +29,7 @@ export default function MenuScreen() {
 
         <View style={styles.section}>
           <TouchableOpacity
-            style={styles.menuItem}
+            style={[styles.menuItem, styles.menuItemLast]}
             onPress={() => router.push('/profile')}
             activeOpacity={0.7}
           >
@@ -38,22 +38,6 @@ export default function MenuScreen() {
                 <User size={20} color={COLORS.primary} />
               </View>
               <Text style={styles.menuItemText}>{t.profile.myAccount}</Text>
-            </View>
-            <ChevronRight size={20} color={COLORS.lightText} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.menuItem, styles.menuItemLast]}
-            onPress={toggleLanguage}
-            activeOpacity={0.7}
-          >
-            <View style={styles.menuItemLeft}>
-              <View style={styles.menuIcon}>
-                <Globe size={20} color={COLORS.primary} />
-              </View>
-              <Text style={styles.menuItemText}>
-                {language === 'afr' ? 'English' : 'Afrikaans'}
-              </Text>
             </View>
             <ChevronRight size={20} color={COLORS.lightText} />
           </TouchableOpacity>
