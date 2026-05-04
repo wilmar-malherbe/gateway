@@ -1,9 +1,9 @@
-import * as SplashScreen from 'expo-splash-screen';
+import { useFrameworkReady } from '@/hooks/useFrameworkReady'import * as SplashScreen from 'expo-splash-screen';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack, useRouter, useSegments } from 'expo-router';
+import { Stack, useSegments, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useFonts } from 'expo-font';
 import {
   Montserrat_100Thin,
@@ -21,13 +21,18 @@ import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 
 SplashScreen.preventAutoHideAsync();
 
-function AuthGate() {
+function AuthRedirect() {
   const { session, initialized } = useAuth();
   const segments = useSegments();
   const router = useRouter();
+  const [navReady, setNavReady] = useState(false);
 
   useEffect(() => {
-    if (!initialized) return;
+    setNavReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!initialized || !navReady) return;
 
     const inAuthGroup = segments[0] === '(auth)';
 
@@ -36,13 +41,14 @@ function AuthGate() {
     } else if (session && inAuthGroup) {
       router.replace('/(tabs)');
     }
-  }, [session, initialized, segments]);
+  }, [session, initialized, segments, navReady]);
 
   return null;
 }
 
-function SplashController() {
+function SplashGate() {
   const { initialized } = useAuth();
+
   const [fontsLoaded, fontError] = useFonts({
     'Montserrat_100Thin': Montserrat_100Thin,
     'Montserrat_300Light': Montserrat_300Light,
@@ -71,8 +77,7 @@ export default function RootLayout() {
       <LanguageProvider>
         <PlatformProvider>
           <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-            <SplashController />
-            <AuthGate />
+            <SplashGate />
             <Stack screenOptions={{ headerShown: false }}>
               <Stack.Screen name="(auth)" />
               <Stack.Screen name="(tabs)" />
@@ -80,6 +85,7 @@ export default function RootLayout() {
               <Stack.Screen name="article-detail" />
               <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
             </Stack>
+            <AuthRedirect />
             <StatusBar style="auto" />
           </ThemeProvider>
         </PlatformProvider>
