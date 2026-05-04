@@ -21,10 +21,6 @@ import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 
 SplashScreen.preventAutoHideAsync();
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
-
 function SplashController() {
   const { initialized } = useAuth();
   const [fontsLoaded, fontError] = useFonts({
