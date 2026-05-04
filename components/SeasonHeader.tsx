@@ -22,7 +22,7 @@ export function SeasonHeader({ isSummer }: SeasonHeaderProps) {
       >
         <View style={styles.overlay}>
           <View style={styles.textPill}>
-            <Text style={styles.seasonText}>{seasonText}</Text>
+            <Text style={styles.seasonText} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75}>{seasonText}</Text>
           </View>
         </View>
       </ImageBackground>
@@ -55,9 +55,10 @@ const styles = StyleSheet.create({
   },
   textPill: {
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingVertical: 8,
     borderRadius: 25,
+    maxWidth: '90%',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

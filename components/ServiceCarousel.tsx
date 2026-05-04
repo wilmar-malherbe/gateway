@@ -42,7 +42,7 @@ export function ServiceCarousel({ services }: ServiceCarouselProps) {
 
     return (
       <View style={styles.card}>
-        <Text style={styles.serviceName}>{serviceName}</Text>
+        <Text style={styles.serviceName} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75}>{serviceName}</Text>
 
         <View style={styles.detailsContainer}>
           <View style={styles.detailRow}>

@@ -57,6 +57,9 @@ export function ActionButton({
               isPrimary && styles.primaryLabel,
               isSecondary && styles.secondaryLabel,
             ]}
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.8}
           >
             {label}
           </Text>
@@ -95,10 +98,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: SPACING.sm,
+    flexShrink: 1,
   },
   label: {
     fontSize: 16,
     fontFamily: Fonts.semibold,
+    flexShrink: 1,
   },
   primaryLabel: {
     color: COLORS.white,
