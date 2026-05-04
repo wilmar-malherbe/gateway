@@ -272,6 +272,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontFamily: Fonts.semibold,
     fontSize: 16,
+    paddingRight: 4,
   },
   footerRow: {
     flexDirection: 'row',
@@ -289,5 +290,6 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontFamily: Fonts.semibold,
     fontSize: 14,
+    paddingRight: 4,
   },
 });
