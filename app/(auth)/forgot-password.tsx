@@ -113,7 +113,7 @@ export default function ForgotPasswordScreen() {
               {submitting ? (
                 <ActivityIndicator color={COLORS.white} />
               ) : (
-                <Text style={styles.buttonText}>{t.auth.sendResetLink}</Text>
+                <Text style={styles.buttonText}>{t.auth.sendResetLink + '\u00A0'}</Text>
               )}
             </TouchableOpacity>
           </>
@@ -124,7 +124,7 @@ export default function ForgotPasswordScreen() {
           onPress={() => router.back()}
           disabled={submitting}
         >
-          <Text style={styles.backLinkText}>{t.auth.backToLogin}</Text>
+          <Text style={styles.backLinkText}>{t.auth.backToLogin + '\u00A0'}</Text>
         </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>

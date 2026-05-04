@@ -114,7 +114,7 @@ export default function LoginScreen() {
           onPress={() => router.push('/(auth)/forgot-password')}
           disabled={submitting}
         >
-          <Text style={styles.forgotLinkText}>{t.auth.forgotPassword}</Text>
+          <Text style={styles.forgotLinkText}>{t.auth.forgotPassword + '\u00A0'}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -126,14 +126,14 @@ export default function LoginScreen() {
           {submitting ? (
             <ActivityIndicator color={COLORS.white} />
           ) : (
-            <Text style={styles.buttonText}>{t.auth.signIn}</Text>
+            <Text style={styles.buttonText}>{t.auth.signIn + '\u00A0'}</Text>
           )}
         </TouchableOpacity>
 
         <View style={styles.footerRow}>
           <Text style={styles.footerText}>{t.auth.noAccount}</Text>
           <TouchableOpacity onPress={() => router.push('/(auth)/signup')} disabled={submitting}>
-            <Text style={styles.footerLink}>{t.auth.signUp}</Text>
+            <Text style={styles.footerLink}>{t.auth.signUp + '\u00A0'}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

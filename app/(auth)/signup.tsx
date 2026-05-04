@@ -173,14 +173,14 @@ export default function SignupScreen() {
           {submitting ? (
             <ActivityIndicator color={COLORS.white} />
           ) : (
-            <Text style={styles.buttonText}>{t.auth.signUp}</Text>
+            <Text style={styles.buttonText}>{t.auth.signUp + '\u00A0'}</Text>
           )}
         </TouchableOpacity>
 
         <View style={styles.footerRow}>
           <Text style={styles.footerText}>{t.auth.haveAccount} </Text>
           <TouchableOpacity onPress={() => router.back()} disabled={submitting}>
-            <Text style={styles.footerLink}>{t.auth.signIn}</Text>
+            <Text style={styles.footerLink}>{t.auth.signIn + '\u00A0'}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

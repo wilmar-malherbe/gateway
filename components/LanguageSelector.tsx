@@ -21,7 +21,7 @@ export function LanguageSelector() {
       activeOpacity={0.7}
     >
       <Text style={styles.flag}>{getFlagEmoji()}</Text>
-      <Text style={styles.languageText}>{getLanguageText()}</Text>
+      <Text style={styles.languageText}>{getLanguageText() + '\u00A0'}</Text>
     </TouchableOpacity>
   );
 }
