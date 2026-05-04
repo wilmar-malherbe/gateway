@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: SPACING.xxl,
     paddingVertical: SPACING.xxl,
+    overflow: 'visible' as const,
   },
   logoContainer: {
     alignItems: 'center',
@@ -203,6 +204,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginBottom: SPACING.xl,
     paddingRight: SPACING.xs,
+    overflow: 'visible' as const,
   },
   forgotLinkText: {
     color: COLORS.primary,
@@ -217,6 +219,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 52,
+    overflow: 'visible' as const,
   },
   buttonDisabled: {
     opacity: 0.7,
@@ -230,6 +233,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: SPACING.xl,
     paddingHorizontal: SPACING.sm,
+    overflow: 'visible' as const,
   },
   footerText: {
     color: COLORS.lightText,

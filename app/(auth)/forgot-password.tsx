@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: SPACING.xxl,
     paddingVertical: SPACING.xxl,
+    overflow: 'visible' as const,
   },
   logoContainer: {
     alignItems: 'center',
@@ -221,6 +222,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 52,
+    overflow: 'visible' as const,
   },
   buttonDisabled: {
     opacity: 0.7,
@@ -233,6 +235,7 @@ const styles = StyleSheet.create({
   backLink: {
     alignItems: 'center',
     marginTop: SPACING.xl,
+    overflow: 'visible' as const,
   },
   backLinkText: {
     color: COLORS.primary,
