@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   ScrollView,
   View,
@@ -17,6 +17,7 @@ import { InfoCard } from '@/components/InfoCard';
 import { LivestreamBanner } from '@/components/LivestreamBanner';
 import { SeasonHeader } from '@/components/SeasonHeader';
 import { ServiceCarousel } from '@/components/ServiceCarousel';
+import { AppLoadingOverlay } from '@/components/AppLoadingOverlay';
 import { useLivestream } from '@/hooks/useLivestream';
 import { useContactInfo } from '@/hooks/useContactInfo';
 import { useSeasonalServices } from '@/hooks/useSeasonalServices';
@@ -25,12 +26,19 @@ import { translate } from '@/translations';
 
 export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
+  const [overlayVisible, setOverlayVisible] = useState(true);
   const { language } = useLanguage();
   const t = translate(language);
 
-  const { services, seasonConfig, refetch: refetchServices } = useSeasonalServices();
-  const { livestream, refetch: refetchLivestream } = useLivestream();
-  const { contactInfo, refetch: refetchContactInfo } = useContactInfo();
+  const { services, seasonConfig, loading: servicesLoading, refetch: refetchServices } = useSeasonalServices();
+  const { livestream, loading: livestreamLoading, refetch: refetchLivestream } = useLivestream();
+  const { contactInfo, loading: contactLoading, refetch: refetchContactInfo } = useContactInfo();
+
+  const isInitialLoading = servicesLoading || livestreamLoading || contactLoading;
+
+  const handleOverlayFinished = useCallback(() => {
+    setOverlayVisible(false);
+  }, []);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -68,6 +76,9 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {overlayVisible && (
+        <AppLoadingOverlay isLoading={isInitialLoading} onFinished={handleOverlayFinished} />
+      )}
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
